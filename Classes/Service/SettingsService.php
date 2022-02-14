@@ -41,6 +41,10 @@ final class SettingsService
     {
         $value = $this->getByPath($path);
 
+        if (null === $value) {
+            return '';
+        }
+
         if (! is_string($value)) {
             $message = sprintf('Cannot cast "%s" to string', $path);
             throw new UnexpectedValueException($message);

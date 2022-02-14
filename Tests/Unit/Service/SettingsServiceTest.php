@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Ssch\Typo3Pagerfanta\Tests\Unit\Service;
 
+use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Ssch\Typo3Pagerfanta\Service\SettingsService;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
@@ -31,7 +32,7 @@ final class SettingsServiceTest extends UnitTestCase
 
     public function testGivenPathReturnsCorrectValue(): void
     {
-        self::assertEquals('fluid', $this->settingsService->getStringByPath('default_view'));
+        self::assertSame('fluid', $this->settingsService->getStringByPath('default_view'));
     }
 
     public function testGivenPathThrowsExceptionBecauseTheValueIsNotAString(): void
@@ -51,7 +52,7 @@ final class SettingsServiceTest extends UnitTestCase
                 'bar' => 'baz',
             ],
         ];
-        $configurationManager->getConfiguration(\Prophecy\Argument::type('string'), 'Typo3Pagerfanta')->willReturn(
+        $configurationManager->getConfiguration(Argument::type('string'), 'Typo3Pagerfanta')->willReturn(
             $settings
         );
 

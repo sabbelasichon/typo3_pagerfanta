@@ -16,3 +16,4 @@ package.json
 yarn.lock
 /Configuration/RTE/*
 ToDo.md
+typo3conf
