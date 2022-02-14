@@ -33,15 +33,12 @@ final class PaginationViewHelper extends AbstractViewHelper
         $this->registerArgument('options', 'array', 'The options', false, []);
     }
 
-    /**
-     * @param array $arguments
-     */
+
     public static function renderStatic(
         array $arguments,
         Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
-    ): string
-    {
+    ): string {
         $viewName = $arguments['viewName'];
         $options = $arguments['options'];
         $pagerfanta = $arguments['pagerfanta'];

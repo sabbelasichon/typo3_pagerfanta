@@ -38,8 +38,7 @@ final class PageViewHelper extends AbstractViewHelper
         array $arguments,
         Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
-    ): string
-    {
+    ): string {
         $page = (int) $arguments['page'];
         $routeGenerator = $arguments['route_generator'];
 

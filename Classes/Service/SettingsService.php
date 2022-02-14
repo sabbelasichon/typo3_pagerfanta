@@ -14,7 +14,6 @@ namespace Ssch\Typo3Pagerfanta\Service;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use UnexpectedValueException;
-use Webmozart\Assert\Assert;
 
 final class SettingsService
 {
@@ -42,7 +41,7 @@ final class SettingsService
     {
         $value = $this->getByPath($path);
 
-        if(!is_string($value)) {
+        if (! is_string($value)) {
             $message = sprintf('Cannot cast "%s" to string', $path);
             throw new UnexpectedValueException($message);
         }
