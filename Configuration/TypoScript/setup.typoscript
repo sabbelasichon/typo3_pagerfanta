@@ -1,0 +1,26 @@
+plugin.tx_typo3pagerfanta {
+    settings {
+        default_view = {$plugin.tx_typo3pagerfanta.settings.default_view}
+        default_fluid_template = {$plugin.tx_typo3pagerfanta.settings.default_fluid_template}
+    }
+
+    view {
+        templateRootPaths {
+            0 = EXT:typo3_pagerfanta/Resources/Private/Templates/
+            1 = {$plugin.tx_typo3pagerfanta.view.templateRootPath}
+        }
+
+        partialRootPaths {
+            0 = EXT:typo3_pagerfanta/Resources/Private/Partials/
+            1 = {$plugin.tx_typo3pagerfanta.view.partialRootPath}
+        }
+
+        layoutRootPaths {
+            0 = EXT:typo3_pagerfanta/Resources/Private/Layouts/
+            1 = {$plugin.tx_typo3pagerfanta.view.layoutRootPath}
+        }
+    }
+}
+
+module.tx_typo3pagerfanta.settings < plugin.tx_typo3pagerfanta.settings
+module.tx_typo3pagerfanta.view < plugin.tx_typo3pagerfanta.view

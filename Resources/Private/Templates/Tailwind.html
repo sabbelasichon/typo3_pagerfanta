@@ -1,0 +1,126 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:pagerfanta="http://typo3.org/ns/Ssch/Typo3Pagerfanta/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:render section="pager_widget" arguments="{_all}"/>
+
+<f:section name="pager_widget">
+    <nav role="navigation" class="flex items-center justify-between">
+        <div class="flex-1 flex items-center justify-between">
+            <div>
+                <span class="relative z-0 inline-flex shadow-sm">
+                    <f:render section="pager" arguments="{_all}"/>
+                </span>
+            </div>
+        </div>
+    </nav>
+</f:section>
+<f:section name="pager">
+    <f:if condition="{pagination.hasPreviousPage}">
+        <f:then>
+            <f:variable name="path">{pagerfanta:page(route_generator: route_generator, page: pagination.previousPage)}</f:variable>
+            <f:render section="previous_page_link" arguments="{_all}"/>
+        </f:then>
+        <f:else>
+            <f:render section="previous_page_link_disabled" arguments="{_all}"/>
+        </f:else>
+    </f:if>
+
+    <f:if condition="{pagination.startPage} > 1">
+        <f:variable name="page">1</f:variable>
+        <f:variable name="path">{pagerfanta:page(route_generator: route_generator, page: page)}</f:variable>
+        <f:render section="page_link" arguments="{_all}"/>
+    </f:if>
+
+    <f:if condition="{pagination.startPage} == 3">
+        <f:variable name="page">2</f:variable>
+        <f:variable name="path">{pagerfanta:page(route_generator: route_generator, page: page)}</f:variable>
+        <f:render section="page_link" arguments="{_all}"/>
+    </f:if>
+
+    <f:if condition="{pagination.startPage} > 3">
+        <f:render section="ellipsis" arguments="{_all}"/>
+    </f:if>
+
+    <f:for each="{pagination.pages}" as="page">
+        <f:variable name="path">{pagerfanta:page(route_generator: route_generator, page: page)}</f:variable>
+        <f:if condition="{page} == {pagination.currentPage}">
+            <f:then>
+                <f:render section="current_page_link" arguments="{_all}"/>
+            </f:then>
+            <f:else>
+                <f:render section="page_link" arguments="{_all}"/>
+            </f:else>
+        </f:if>
+    </f:for>
+
+    <f:if condition="{pagination.endPage} < {pagination.nbPages - 2}">
+        <f:render section="ellipsis" arguments="{_all}"/>
+    </f:if>
+
+    <f:if condition="{pagination.endPage} == {pagination.nbPages - 2}">
+        <f:variable name="page">{pagination.nbPages - 1}</f:variable>
+        <f:variable name="path">{pagerfanta:page(route_generator: route_generator, page: page)}</f:variable>
+        <f:render section="page_link" arguments="{_all}"/>
+    </f:if>
+
+    <f:if condition="{pagination.nbPages} > {pagination.endPage}">
+        <f:variable name="page">{pagination.nbPages}</f:variable>
+        <f:variable name="path">{pagerfanta:page(route_generator: route_generator, page: page)}</f:variable>
+        <f:render section="page_link" arguments="{_all}"/>
+    </f:if>
+
+    <f:if condition="{pagination.hasNextPage}">
+        <f:then>
+            <f:variable name="page">{pagination.nextPage}</f:variable>
+            <f:variable name="path">{pagerfanta:page(route_generator: route_generator, page: page)}</f:variable>
+            <f:render section="next_page_link" arguments="{_all}"/>
+        </f:then>
+        <f:else>
+            <f:render section="next_page_link_disabled" arguments="{_all}"/>
+        </f:else>
+    </f:if>
+</f:section>
+
+<f:section name="page_link">
+    <a class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150" href="{path}">{page}</a>
+</f:section>
+
+<f:section name="current_page_link">
+    <span aria-current="page"><span class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default leading-5">{page}</span></span>
+</f:section>
+
+<f:section name="previous_page_link">
+    <a class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-l-md leading-5 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150" href="{path}" rel="prev">
+        <f:render partial="Common" arguments="{_all}" section="previous_page_message" />
+    </a>
+</f:section>
+
+<f:section name="previous_page_link_disabled">
+    <span aria-disabled="true">
+        <span class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-l-md leading-5">
+            <f:render partial="Common" arguments="{_all}" section="previous_page_message" />
+        </span>
+    </span>
+</f:section>
+
+
+
+
+<f:section name="next_page_link">
+    <a class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-r-md leading-5 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150" href="{path}" rel="next">
+        <f:render partial="Common" arguments="{_all}" section="next_page_message" />
+    </a>
+</f:section>
+
+<f:section name="next_page_link_disabled">
+    <span aria-disabled="true">
+        <span class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-r-md leading-5">
+            <f:render partial="Common" arguments="{_all}" section="next_page_message" />
+        </span>
+    </span>
+</f:section>
+
+<f:section name="ellipsis">
+    <span aria-disabled="true"><span class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 cursor-default leading-5">&hellip;</span></span>
+</f:section>
+</html>

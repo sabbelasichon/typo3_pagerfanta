@@ -1,0 +1,15 @@
+plugin.tx_typo3pagerfanta {
+    settings {
+        default_view = fluid
+        default_fluid_template = EXT:typo3_pagerfanta/Resources/Private/Templates/Foundation6.html
+    }
+
+    view {
+        # cat=plugin.tx_typo3pagerfanta/file; type=string; label=Path to template root (FE)
+        templateRootPath = EXT:typo3_pagerfanta/Resources/Private/Templates/
+        # cat=plugin.tx_typo3pagerfanta/file; type=string; label=Path to template partials (FE)
+        partialRootPath = EXT:typo3_pagerfanta/Resources/Private/Partials/
+        # cat=plugin.tx_typo3pagerfanta/file; type=string; label=Path to template layouts (FE)
+        layoutRootPath = EXT:typo3_pagerfanta/Resources/Private/Layouts/
+    }
+}

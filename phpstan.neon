@@ -1,0 +1,11 @@
+parameters:
+  editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
+  level: max
+  paths:
+    - Classes
+    - Configuration
+    - Tests
+
+  inferPrivatePropertyTypeFromConstructor: true
+  checkMissingIterableValueType: false
+  checkGenericClassInNonGenericObjectType: false
