@@ -49,7 +49,6 @@ final class PaginationTest extends FunctionalTestCase
         $this->setUpSites(self::ROOT_PAGE_UID, []);
     }
 
-
     public function testPaginationIsProperlyCreated(): void
     {
         $response = $this->executeFrontendRequest((new InternalRequest())->withPageId(self::ROOT_PAGE_UID));

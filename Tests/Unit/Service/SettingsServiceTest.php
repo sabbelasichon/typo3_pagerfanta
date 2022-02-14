@@ -52,9 +52,7 @@ final class SettingsServiceTest extends UnitTestCase
                 'bar' => 'baz',
             ],
         ];
-        $configurationManager->getConfiguration(Argument::type('string'), 'Typo3Pagerfanta')->willReturn(
-            $settings
-        );
+        $configurationManager->getConfiguration(Argument::type('string'), 'Typo3Pagerfanta')->willReturn($settings);
 
         return $configurationManager->reveal();
     }
