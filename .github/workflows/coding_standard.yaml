@@ -35,6 +35,6 @@ jobs:
             -   uses: stefanzweifel/git-auto-commit-action@v4.13.1
                 with:
                     commit_message: Apply coding standard changes
-                    branch: "master"
+                    branch: "main"
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
