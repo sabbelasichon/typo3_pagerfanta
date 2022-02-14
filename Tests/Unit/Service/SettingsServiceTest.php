@@ -40,7 +40,6 @@ final class SettingsServiceTest extends UnitTestCase
         $this->settingsService->getStringByPath('foo');
     }
 
-
     private function createConfigurationManager(): ConfigurationManagerInterface
     {
         $configurationManager = $this->prophesize(ConfigurationManagerInterface::class);
