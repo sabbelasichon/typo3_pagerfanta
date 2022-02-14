@@ -29,7 +29,7 @@ final class PaginationTest extends FunctionalTestCase
     protected $testExtensionsToLoad = ['typo3conf/ext/typo3_pagerfanta'];
 
     /**
-     * @var string[]
+     * @var array<int, string>
      */
     protected $coreExtensionsToLoad = ['extbase', 'fluid'];
 

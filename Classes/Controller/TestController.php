@@ -18,6 +18,9 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 final class TestController extends ActionController
 {
+    /**
+     * @phpstan-param positive-int $currentPage
+     */
     public function listAction(int $currentPage = 1): ResponseInterface
     {
         $adapter = new ArrayAdapter(range('A', 'Z'));
