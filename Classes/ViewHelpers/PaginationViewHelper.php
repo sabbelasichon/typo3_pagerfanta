@@ -33,7 +33,6 @@ final class PaginationViewHelper extends AbstractViewHelper
         $this->registerArgument('options', 'array', 'The options', false, []);
     }
 
-
     public static function renderStatic(
         array $arguments,
         Closure $renderChildrenClosure,
