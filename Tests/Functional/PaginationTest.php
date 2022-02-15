@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Ssch\Typo3Pagerfanta\Tests\Functional;
 
+use Iterator;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
@@ -49,17 +50,15 @@ final class PaginationTest extends FunctionalTestCase
         $this->setUpSiteConfiguration();
     }
 
-    public function providePaginationFrameworkTypes(): array
+    public function providePaginationFrameworkTypes(): Iterator
     {
-        return [
-            ['Default'],
-            ['Foundation6'],
-            ['Tailwind'],
-            ['TwitterBootstrap'],
-            ['TwitterBootstrap3'],
-            ['TwitterBootstrap4'],
-            ['TwitterBootstrap5'],
-        ];
+        yield ['Default'];
+        yield ['Foundation6'];
+        yield ['Tailwind'];
+        yield ['TwitterBootstrap'];
+        yield ['TwitterBootstrap3'];
+        yield ['TwitterBootstrap4'];
+        yield ['TwitterBootstrap5'];
     }
 
     /**
