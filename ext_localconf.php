@@ -7,7 +7,7 @@ $boot = static function (): void {
         'Typo3Pagerfanta',
         'List',
         [
-            \Ssch\Typo3Pagerfanta\Controller\TestController::class => 'list2',
+            \Ssch\Typo3Pagerfanta\Controller\TestController::class => 'list',
         ]
     );
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
