@@ -51,7 +51,7 @@ final class FluidView extends View
                 $pagerfanta,
                 new PageRange((int) $this->startPage, (int) $this->endPage),
                 (int) $this->currentPage,
-                (int) $this->nbPages
+                (int) $this->nbPages,
             ),
             'route_generator' => $this->decorateRouteGenerator($routeGenerator),
             'options' => $options,
@@ -71,6 +71,10 @@ final class FluidView extends View
             $this->defaultTemplate = $options['template'];
         } elseif ('' !== $this->defaultTemplate) {
             $this->template = $this->defaultTemplate;
+        }
+
+        if(isset($options['itemsPerPage'])) {
+            $this->pagerfanta->setMaxPerPage((int)$options['itemsPerPage']);
         }
 
         parent::initializeOptions($options);
