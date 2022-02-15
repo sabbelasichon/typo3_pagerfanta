@@ -8,7 +8,6 @@ config {
 plugin.tx_typo3pagerfanta {
     settings {
         default_view = fluid
-        default_fluid_template = EXT:typo3_pagerfanta/Resources/Private/Templates/Foundation6.html
     }
 }
 
@@ -17,7 +16,6 @@ page.10 = USER
 page.10 {
     userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
     extensionName = Typo3Pagerfanta
-    cono
     pluginName = List
 }
 

@@ -44,26 +44,48 @@ final class PaginationTest extends FunctionalTestCase
         parent::setUp();
         $this->importDataSet(__DIR__ . '/Fixtures/Database/pages.xml');
         $this->setUpFrontendRootPage(self::ROOT_PAGE_UID, [
-            'setup' => ['EXT:typo3_pagerfanta/Tests/Functional/Fixtures/Frontend/Basic.typoscript'],
+            'setup' => ['EXT:typo3_pagerfanta/Tests/Functional/Fixtures/Frontend/TypoScript/Basic.typoscript'],
         ]);
-        $this->setUpSites(self::ROOT_PAGE_UID, []);
+        $this->setUpSiteConfiguration();
     }
 
-    public function testPaginationIsProperlyCreated(): void
+    public function providePaginationFrameworkTypes(): array
     {
+        return [
+            ['Default'],
+            ['Foundation6'],
+            ['Tailwind'],
+            ['TwitterBootstrap'],
+            ['TwitterBootstrap3'],
+            ['TwitterBootstrap4'],
+            ['TwitterBootstrap5'],
+        ];
+    }
+
+    /**
+     * @dataProvider providePaginationFrameworkTypes
+     */
+    public function testPaginationWithFluidViewAndWithDifferentFrameworkIntegrationsRendersProperly(
+        string $paginationFrameworkType
+    ): void
+    {
+        $typoscriptSnippet = 'plugin.tx_typo3pagerfanta.settings.default_fluid_template = EXT:typo3_pagerfanta/Resources/Private/Templates/' . $paginationFrameworkType . '.html';
+
+        $this->addTypoScriptToTemplateRecord(self::ROOT_PAGE_UID, $typoscriptSnippet);
         $response = $this->executeFrontendRequest((new InternalRequest())->withPageId(self::ROOT_PAGE_UID));
 
         $content = $response->getBody()
             ->__toString();
 
-        self::assertStringEqualsFile(__DIR__ . '/Fixtures/Expected/PaginationFoundation6.html', $content);
+        file_put_contents(__DIR__ . '/Fixtures/Expected/' . $paginationFrameworkType . '.html', $content);
+        self::assertStringEqualsFile(__DIR__ . '/Fixtures/Expected/Fluid/' . $paginationFrameworkType . '.html', $content);
     }
 
-    protected function setUpSites(int $pageId, array $sites): void
+    private function setUpSiteConfiguration(): void
     {
-        if (! isset($sites[$pageId])) {
-            $sites[$pageId] = 'EXT:typo3_pagerfanta/Tests/Functional/Fixtures/Frontend/site.yaml';
-        }
+        $sites = [
+            self::ROOT_PAGE_UID => 'EXT:typo3_pagerfanta/Tests/Functional/Fixtures/Frontend/config/site.yaml',
+        ];
 
         foreach ($sites as $identifier => $file) {
             $path = Environment::getConfigPath() . '/sites/' . $identifier . '/';
@@ -74,7 +96,7 @@ final class PaginationTest extends FunctionalTestCase
                     $file = GeneralUtility::getFileAbsFileName($file);
                 }
                 $fileContent = file_get_contents($file);
-                $fileContent = str_replace('\'{rootPageId}\'', (string) $pageId, (string) $fileContent);
+                $fileContent = str_replace('\'{rootPageId}\'', (string) self::ROOT_PAGE_UID, (string) $fileContent);
                 GeneralUtility::writeFile($target, $fileContent);
             }
         }
