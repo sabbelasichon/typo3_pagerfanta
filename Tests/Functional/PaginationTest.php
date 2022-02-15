@@ -75,7 +75,8 @@ final class PaginationTest extends FunctionalTestCase
     /**
      * @dataProvider providePaginationViewOtherThanFluid
      */
-    public function testPaginationWithForDifferentViewsProperly(string $viewType, string $expectedTemplate): void {
+    public function testPaginationWithForDifferentViewsProperly(string $viewType, string $expectedTemplate): void
+    {
         $typoscriptSnippet = <<<CODE_SAMPLE
     plugin.tx_typo3pagerfanta.settings.default_view = ${viewType}
 CODE_SAMPLE;
