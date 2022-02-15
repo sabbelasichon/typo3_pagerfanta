@@ -5,12 +5,6 @@ config {
     disableAllHeaderCode = 1
 }
 
-plugin.tx_typo3pagerfanta {
-    settings {
-        default_view = fluid
-    }
-}
-
 page = PAGE
 page.10 = USER
 page.10 {

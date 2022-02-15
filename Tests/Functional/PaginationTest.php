@@ -67,7 +67,10 @@ final class PaginationTest extends FunctionalTestCase
     public function testPaginationWithFluidViewAndWithDifferentFrameworkIntegrationsRendersProperly(
         string $paginationFrameworkType
     ): void {
-        $typoscriptSnippet = 'plugin.tx_typo3pagerfanta.settings.default_fluid_template = EXT:typo3_pagerfanta/Resources/Private/Templates/' . $paginationFrameworkType . '.html';
+        $typoscriptSnippet = <<<CODE_SAMPLE
+    plugin.tx_typo3pagerfanta.settings.default_view = fluid
+    plugin.tx_typo3pagerfanta.settings.default_fluid_template = EXT:typo3_pagerfanta/Resources/Private/Templates/${paginationFrameworkType}.html
+CODE_SAMPLE;
 
         $this->addTypoScriptToTemplateRecord(self::ROOT_PAGE_UID, $typoscriptSnippet);
         $response = $this->executeFrontendRequest((new InternalRequest())->withPageId(self::ROOT_PAGE_UID));
@@ -75,7 +78,6 @@ final class PaginationTest extends FunctionalTestCase
         $content = $response->getBody()
             ->__toString();
 
-        file_put_contents(__DIR__ . '/Fixtures/Expected/' . $paginationFrameworkType . '.html', $content);
         self::assertStringEqualsFile(
             __DIR__ . '/Fixtures/Expected/Fluid/' . $paginationFrameworkType . '.html',
             $content
