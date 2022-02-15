@@ -23,6 +23,10 @@ final class Pagination
 
     private PageRange $pageRange;
 
+    /**
+     * @phpstan-param int<0, max> $currentPage
+     * @phpstan-param int<0, max> $nbPages
+     */
     public function __construct(PagerfantaInterface $pagerfanta, PageRange $pageRange, int $currentPage, int $nbPages)
     {
         $this->currentPage = $currentPage;

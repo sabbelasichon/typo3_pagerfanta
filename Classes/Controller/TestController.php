@@ -24,12 +24,7 @@ final class TestController extends ActionController
      */
     public function listAction(int $currentPage = 1): ResponseInterface
     {
-        $adapter = new ArrayAdapter(range('A', 'Z'));
-
-        $pagerfanta = Pagerfanta::createForCurrentPageWithMaxPerPage($adapter, 1, 1);
-        $pagerfanta->setCurrentPage($currentPage);
-
-        $this->view->assign('pagerfanta', $pagerfanta);
+        $this->assignPagerfantaToView($currentPage);
 
         return $this->htmlResponse();
     }
@@ -39,17 +34,26 @@ final class TestController extends ActionController
      */
     public function customRouteGeneratorAction(int $currentPage = 1): ResponseInterface
     {
-        $adapter = new ArrayAdapter(range('A', 'Z'));
+        $this->assignPagerfantaToView($currentPage);
 
-        $pagerfanta = Pagerfanta::createForCurrentPageWithMaxPerPage($adapter, 1, 1);
-        $pagerfanta->setCurrentPage($currentPage);
-
-        $this->view->assign('pagerfanta', $pagerfanta);
         $routeGenerator = new RouteGeneratorDecorator(function (int $page) {
             return (string) $page;
         });
         $this->view->assign('routeGenerator', $routeGenerator);
 
         return $this->htmlResponse();
+    }
+
+    /**
+     * @phpstan-param positive-int $currentPage
+     */
+    private function assignPagerfantaToView(int $currentPage): void
+    {
+        $adapter = new ArrayAdapter(range('A', 'Z'));
+
+        $pagerfanta = Pagerfanta::createForCurrentPageWithMaxPerPage($adapter, 1, 1);
+        $pagerfanta->setCurrentPage($currentPage);
+
+        $this->view->assign('pagerfanta', $pagerfanta);
     }
 }

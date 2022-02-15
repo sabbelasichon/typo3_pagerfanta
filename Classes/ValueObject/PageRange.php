@@ -15,10 +15,20 @@ use Webmozart\Assert\Assert;
 
 final class PageRange
 {
+    /**
+     * @phpstan-var int<0, max>
+     */
     private int $startPage;
 
+    /**
+     * @phpstan-var int<0, max>
+     */
     private int $endPage;
 
+    /**
+     * @phpstan-param int<0, max> $startPage
+     * @phpstan-param int<0, max> $endPage
+     */
     public function __construct(int $startPage, int $endPage)
     {
         Assert::lessThanEq($startPage, $endPage);
@@ -26,16 +36,25 @@ final class PageRange
         $this->endPage = $endPage;
     }
 
+    /**
+     * @phpstan-return int<0, max>
+     */
     public function getStartPage(): int
     {
         return $this->startPage;
     }
 
+    /**
+     * @phpstan-return int<0, max>
+     */
     public function getEndPage(): int
     {
         return $this->endPage;
     }
 
+    /**
+     * @return int[]
+     */
     public function range(): array
     {
         return range($this->startPage, $this->endPage);
