@@ -50,7 +50,7 @@ final class PaginationTest extends FunctionalTestCase
         $this->setUpSiteConfiguration();
     }
 
-    public function providePaginationFrameworkTypes(): Iterator
+    public function providePaginationForFluidWithDifferentFrameworkTypes(): Iterator
     {
         yield ['Default'];
         yield ['Foundation6'];
@@ -61,8 +61,39 @@ final class PaginationTest extends FunctionalTestCase
         yield ['TwitterBootstrap5'];
     }
 
+    public function providePaginationViewOtherThanFluid(): Iterator
+    {
+        yield ['default', 'Default'];
+        yield ['foundation6', 'Foundation6'];
+        yield ['semantic_ui', 'SemanticUi'];
+        yield ['twitter_bootstrap', 'TwitterBootstrap'];
+        yield ['twitter_bootstrap3', 'TwitterBootstrap3'];
+        yield ['twitter_bootstrap4', 'TwitterBootstrap4'];
+        yield ['twitter_bootstrap5', 'TwitterBootstrap5'];
+    }
+
     /**
-     * @dataProvider providePaginationFrameworkTypes
+     * @dataProvider providePaginationViewOtherThanFluid
+     */
+    public function testPaginationWithForDifferentViewsProperly(string $viewType, string $expectedTemplate): void {
+        $typoscriptSnippet = <<<CODE_SAMPLE
+    plugin.tx_typo3pagerfanta.settings.default_view = ${viewType}
+CODE_SAMPLE;
+
+        $this->addTypoScriptToTemplateRecord(self::ROOT_PAGE_UID, $typoscriptSnippet);
+        $response = $this->executeFrontendRequest((new InternalRequest())->withPageId(self::ROOT_PAGE_UID));
+
+        $content = $response->getBody()
+            ->__toString();
+
+        self::assertStringEqualsFile(
+            __DIR__ . '/Fixtures/Expected/Pagerfanta/' . $expectedTemplate . '.html',
+            $content
+        );
+    }
+
+    /**
+     * @dataProvider providePaginationForFluidWithDifferentFrameworkTypes
      */
     public function testPaginationWithFluidViewAndWithDifferentFrameworkIntegrationsRendersProperly(
         string $paginationFrameworkType
