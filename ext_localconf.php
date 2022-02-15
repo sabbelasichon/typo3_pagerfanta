@@ -7,9 +7,15 @@ $boot = static function (): void {
         'Typo3Pagerfanta',
         'List',
         [
-            \Ssch\Typo3Pagerfanta\Controller\TestController::class => 'list',
-        ],
-        []
+            \Ssch\Typo3Pagerfanta\Controller\TestController::class => 'list2',
+        ]
+    );
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'Typo3Pagerfanta',
+        'CustomRouteGenerator',
+        [
+            \Ssch\Typo3Pagerfanta\Controller\TestController::class => 'customRouteGenerator',
+        ]
     );
 };
 

@@ -1,0 +1,16 @@
+config {
+    debug = 0
+    xhtml_cleaning = 0
+    admPanel = 0
+    disableAllHeaderCode = 1
+}
+
+page = PAGE
+page.10 = USER
+page.10 {
+    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+    extensionName = Typo3Pagerfanta
+    pluginName = CustomRouteGenerator
+}
+
+

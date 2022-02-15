@@ -24,6 +24,9 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 final class PaginationViewHelper extends AbstractViewHelper
 {
+    /**
+     * @var bool
+     */
     protected $escapeOutput = false;
 
     public function initializeArguments(): void
@@ -31,6 +34,12 @@ final class PaginationViewHelper extends AbstractViewHelper
         $this->registerArgument('pagerfanta', PagerfantaInterface::class, 'The pagerfanta', true);
         $this->registerArgument('viewName', 'string', 'The view', false);
         $this->registerArgument('options', 'array', 'The options', false, []);
+        $this->registerArgument(
+            'routeGenerator',
+            RouteGeneratorInterface::class,
+            'Different RouteGenerator implementation',
+            false
+        );
     }
 
     public static function renderStatic(
@@ -41,6 +50,7 @@ final class PaginationViewHelper extends AbstractViewHelper
         $viewName = $arguments['viewName'];
         $options = $arguments['options'];
         $pagerfanta = $arguments['pagerfanta'];
+        $routeGenerator = $arguments['routeGenerator'] ?? self::createRouteGenerator($options);
 
         /** @var ViewFactoryInterface $viewFactory */
         $viewFactory = GeneralUtility::getContainer()->get(ViewFactoryInterface::class);
@@ -55,7 +65,7 @@ final class PaginationViewHelper extends AbstractViewHelper
         }
 
         return $viewFactory->get($viewName)
-            ->render($pagerfanta, self::createRouteGenerator($options), $options);
+            ->render($pagerfanta, $routeGenerator, $options);
     }
 
     private static function createRouteGenerator(array $options = []): RouteGeneratorInterface
