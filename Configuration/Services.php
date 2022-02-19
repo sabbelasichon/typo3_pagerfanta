@@ -57,10 +57,7 @@ return static function (ContainerConfigurator $containerConfigurator, ContainerB
         'alias' => 'twitter_bootstrap5',
     ]);
 
-    $services->set('pagerfanta.view_factory', ViewFactory::class)->tag('container.private', [
-        'package' => 'pagerfanta-bundle',
-        'version' => '3.5',
-    ])->public();
+    $services->set('pagerfanta.view_factory', ViewFactory::class)->public();
     $services->alias(ViewFactoryInterface::class, 'pagerfanta.view_factory')->public();
 
     $services->set(SettingsService::class)->args([service(ConfigurationManagerInterface::class)])->public();
@@ -73,10 +70,6 @@ return static function (ContainerConfigurator $containerConfigurator, ContainerB
 
     $services->set('pagerfanta.route_generator_factory', RequestAwareRouteGeneratorFactory::class)
         ->args([service(UriBuilder::class), service(RequestBuilder::class)])
-        ->tag('container.private', [
-            'package' => 'pagerfanta-bundle',
-            'version' => '3.5',
-        ])
         ->public();
 
     $services->alias(RouteGeneratorFactoryInterface::class, 'pagerfanta.route_generator_factory')
