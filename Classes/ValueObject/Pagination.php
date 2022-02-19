@@ -29,7 +29,13 @@ final class Pagination
      * @phpstan-param int<0, max> $currentPage
      * @phpstan-param int<0, max> $nbPages
      */
-    public function __construct(PagerfantaInterface $pagerfanta, PageRange $pageRange, int $currentPage, int $nbPages, bool $showPages)
+    public function __construct(
+        PagerfantaInterface $pagerfanta,
+        PageRange $pageRange,
+        int $currentPage,
+        int $nbPages,
+        bool $showPages
+    )
     {
         $this->currentPage = $currentPage;
         $this->nbPages = $nbPages;

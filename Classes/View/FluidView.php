@@ -48,7 +48,6 @@ final class FluidView extends View
 
         $this->standaloneView->setTemplatePathAndFilename($this->template);
 
-
         $this->standaloneView->assignMultiple([
             'pagination' => new Pagination(
                 $pagerfanta,
@@ -81,8 +80,8 @@ final class FluidView extends View
             $this->pagerfanta->setMaxPerPage((int) $options['itemsPerPage']);
         }
 
-        if(isset($options['showPages'])) {
-            $this->showPages = (bool)$options['showPages'];
+        if (isset($options['showPages'])) {
+            $this->showPages = (bool) $options['showPages'];
         }
 
         parent::initializeOptions($options);
