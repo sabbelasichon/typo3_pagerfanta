@@ -35,8 +35,7 @@ final class Pagination
         int $currentPage,
         int $nbPages,
         bool $showPages
-    )
-    {
+    ) {
         $this->currentPage = $currentPage;
         $this->nbPages = $nbPages;
         $this->pagerfanta = $pagerfanta;
