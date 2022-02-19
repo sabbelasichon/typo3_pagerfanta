@@ -9,3 +9,8 @@ parameters:
   inferPrivatePropertyTypeFromConstructor: true
   checkMissingIterableValueType: false
   checkGenericClassInNonGenericObjectType: false
+  ignoreErrors:
+    -
+        message: "#^Parameter \\#1 \\$maxPerPage of method Pagerfanta\\\\PagerfantaInterface\\<mixed\\>\\:\\:setMaxPerPage\\(\\) expects int\\<1, max\\>, int given\\.$#"
+        count: 1
+        path: Classes/View/FluidView.php
