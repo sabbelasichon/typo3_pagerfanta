@@ -29,6 +29,8 @@ final class FluidView extends View
 
     private string $defaultTemplate;
 
+    private bool $showPages;
+
     public function __construct(StandaloneView $standaloneView, SettingsService $settingsService)
     {
         $this->standaloneView = $standaloneView;
@@ -46,12 +48,14 @@ final class FluidView extends View
 
         $this->standaloneView->setTemplatePathAndFilename($this->template);
 
+
         $this->standaloneView->assignMultiple([
             'pagination' => new Pagination(
                 $pagerfanta,
                 new PageRange((int) $this->startPage, (int) $this->endPage),
                 (int) $this->currentPage,
                 (int) $this->nbPages,
+                $this->showPages
             ),
             'route_generator' => $this->decorateRouteGenerator($routeGenerator),
             'options' => $options,
@@ -75,6 +79,10 @@ final class FluidView extends View
 
         if (isset($options['itemsPerPage'])) {
             $this->pagerfanta->setMaxPerPage((int) $options['itemsPerPage']);
+        }
+
+        if(isset($options['showPages'])) {
+            $this->showPages = (bool)$options['showPages'];
         }
 
         parent::initializeOptions($options);

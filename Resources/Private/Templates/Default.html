@@ -21,48 +21,50 @@
         </f:else>
     </f:if>
 
-    <f:if condition="{pagination.startPage} > 1">
-        <f:variable name="page">1</f:variable>
-        <f:variable name="path">{pagerfanta:page(route_generator: route_generator, page: page)}</f:variable>
-        <f:render section="page_link" arguments="{_all}"/>
-    </f:if>
-
-    <f:if condition="{pagination.startPage} == 3">
-        <f:variable name="page">2</f:variable>
-        <f:variable name="path">{pagerfanta:page(route_generator: route_generator, page: page)}</f:variable>
-        <f:render section="page_link" arguments="{_all}"/>
-    </f:if>
-
-    <f:if condition="{pagination.startPage} > 3">
-        <f:render section="ellipsis" arguments="{_all}"/>
-    </f:if>
-
-    <f:for each="{pagination.pages}" as="page">
-        <f:variable name="path">{pagerfanta:page(route_generator: route_generator, page: page)}</f:variable>
-        <f:if condition="{page} == {pagination.currentPage}">
-            <f:then>
-                <f:render section="current_page_link" arguments="{_all}"/>
-            </f:then>
-            <f:else>
-                <f:render section="page_link" arguments="{_all}"/>
-            </f:else>
+    <f:if condition="{pagination.showPages}">
+        <f:if condition="{pagination.startPage} > 1">
+            <f:variable name="page">1</f:variable>
+            <f:variable name="path">{pagerfanta:page(route_generator: route_generator, page: page)}</f:variable>
+            <f:render section="page_link" arguments="{_all}"/>
         </f:if>
-    </f:for>
 
-    <f:if condition="{pagination.endPage} < {pagination.nbPages - 2}">
-        <f:render section="ellipsis" arguments="{_all}"/>
-    </f:if>
+        <f:if condition="{pagination.startPage} == 3">
+            <f:variable name="page">2</f:variable>
+            <f:variable name="path">{pagerfanta:page(route_generator: route_generator, page: page)}</f:variable>
+            <f:render section="page_link" arguments="{_all}"/>
+        </f:if>
 
-    <f:if condition="{pagination.endPage} == {pagination.nbPages - 2}">
-        <f:variable name="page">{pagination.nbPages - 1}</f:variable>
-        <f:variable name="path">{pagerfanta:page(route_generator: route_generator, page: page)}</f:variable>
-        <f:render section="page_link" arguments="{_all}"/>
-    </f:if>
+        <f:if condition="{pagination.startPage} > 3">
+            <f:render section="ellipsis" arguments="{_all}"/>
+        </f:if>
 
-    <f:if condition="{pagination.nbPages} > {pagination.endPage}">
-        <f:variable name="page">{pagination.nbPages}</f:variable>
-        <f:variable name="path">{pagerfanta:page(route_generator: route_generator, page: page)}</f:variable>
-        <f:render section="page_link" arguments="{_all}"/>
+        <f:for each="{pagination.pages}" as="page">
+            <f:variable name="path">{pagerfanta:page(route_generator: route_generator, page: page)}</f:variable>
+            <f:if condition="{page} == {pagination.currentPage}">
+                <f:then>
+                    <f:render section="current_page_link" arguments="{_all}"/>
+                </f:then>
+                <f:else>
+                    <f:render section="page_link" arguments="{_all}"/>
+                </f:else>
+            </f:if>
+        </f:for>
+
+        <f:if condition="{pagination.endPage} < {pagination.nbPages - 2}">
+            <f:render section="ellipsis" arguments="{_all}"/>
+        </f:if>
+
+        <f:if condition="{pagination.endPage} == {pagination.nbPages - 2}">
+            <f:variable name="page">{pagination.nbPages - 1}</f:variable>
+            <f:variable name="path">{pagerfanta:page(route_generator: route_generator, page: page)}</f:variable>
+            <f:render section="page_link" arguments="{_all}"/>
+        </f:if>
+
+        <f:if condition="{pagination.nbPages} > {pagination.endPage}">
+            <f:variable name="page">{pagination.nbPages}</f:variable>
+            <f:variable name="path">{pagerfanta:page(route_generator: route_generator, page: page)}</f:variable>
+            <f:render section="page_link" arguments="{_all}"/>
+        </f:if>
     </f:if>
 
     <f:if condition="{pagination.hasNextPage}">
@@ -87,29 +89,27 @@
 
 <f:section name="previous_page_link">
     <a class="pagination__item pagination__item--previous-page" href="{path}" rel="prev">
-        <f:render partial="Common" arguments="{_all}" section="previous_page_message" />
+        <f:render partial="Common" arguments="{_all}" section="previous_page_message"/>
     </a>
 </f:section>
 
 <f:section name="previous_page_link_disabled">
     <span class="pagination__item pagination__item--previous-page pagination__item--disabled">
-        <f:render partial="Common" arguments="{_all}" section="previous_page_message" />
+        <f:render partial="Common" arguments="{_all}" section="previous_page_message"/>
     </span>
 </f:section>
 
 <f:section name="next_page_link">
     <a class="pagination__item pagination__item--next-page" href="{path}" rel="next">
-        <f:render partial="Common" arguments="{_all}" section="next_page_message" />
+        <f:render partial="Common" arguments="{_all}" section="next_page_message"/>
     </a>
 </f:section>
 
 <f:section name="next_page_link_disabled">
     <span class="pagination__item pagination__item--next-page pagination__item--disabled">
-        <f:render partial="Common" arguments="{_all}" section="next_page_message" />
+        <f:render partial="Common" arguments="{_all}" section="next_page_message"/>
     </span>
 </f:section>
-
-
 
 <f:section name="ellipsis">
     <span class="pagination__item pagination__item--separator">&hellip;</span>

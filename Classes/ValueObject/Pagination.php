@@ -23,16 +23,19 @@ final class Pagination
 
     private PageRange $pageRange;
 
+    private bool $showPages;
+
     /**
      * @phpstan-param int<0, max> $currentPage
      * @phpstan-param int<0, max> $nbPages
      */
-    public function __construct(PagerfantaInterface $pagerfanta, PageRange $pageRange, int $currentPage, int $nbPages)
+    public function __construct(PagerfantaInterface $pagerfanta, PageRange $pageRange, int $currentPage, int $nbPages, bool $showPages)
     {
         $this->currentPage = $currentPage;
         $this->nbPages = $nbPages;
         $this->pagerfanta = $pagerfanta;
         $this->pageRange = $pageRange;
+        $this->showPages = $showPages;
     }
 
     public function getHasPreviousPage(): bool
@@ -78,5 +81,10 @@ final class Pagination
     public function getPages(): array
     {
         return $this->pageRange->range();
+    }
+
+    public function isShowPages(): bool
+    {
+        return $this->showPages;
     }
 }
