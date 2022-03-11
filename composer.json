@@ -2,7 +2,6 @@
   "name": "ssch/typo3-pagerfanta",
   "description": "Integrates pagerfanta into TYPO3",
   "type": "typo3-cms-extension",
-  "version": "0.0.1",
   "require": {
     "pagerfanta/core": "^3.5",
     "pagerfanta/doctrine-dbal-adapter": "^3.5",
