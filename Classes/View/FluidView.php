@@ -29,7 +29,7 @@ final class FluidView extends View
 
     private string $defaultTemplate;
 
-    private bool $showPages;
+    private bool $showPages = false;
 
     public function __construct(StandaloneView $standaloneView, SettingsService $settingsService)
     {
