@@ -92,4 +92,9 @@ final class Pagination
     {
         return $this->showPages;
     }
+
+    public function getHaveToPaginate(): bool
+    {
+        return $this->pagerfanta->haveToPaginate();
+    }
 }

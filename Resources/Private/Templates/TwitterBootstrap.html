@@ -1,7 +1,10 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       xmlns:pagerfanta="http://typo3.org/ns/Ssch/Typo3Pagerfanta/ViewHelpers"
       data-namespace-typo3-fluid="true">
-<f:render section="pager_widget" arguments="{_all}"/>
+
+<f:if condition="{pagination.haveToPaginate}">
+    <f:render section="pager_widget" arguments="{_all}"/>
+</f:if>
 
 <f:section name="pager_widget">
     <nav class="pagination">
