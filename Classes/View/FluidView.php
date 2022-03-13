@@ -76,10 +76,6 @@ final class FluidView extends View
             $this->template = $this->defaultTemplate;
         }
 
-        if (isset($options['itemsPerPage'])) {
-            $this->pagerfanta->setMaxPerPage((int) $options['itemsPerPage']);
-        }
-
         if (isset($options['showPages'])) {
             $this->showPages = (bool) $options['showPages'];
         }
