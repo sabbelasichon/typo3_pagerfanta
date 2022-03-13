@@ -4,3 +4,6 @@
 /.gitignore export-ignore
 /phpstan.neon export-ignore
 /.editorconfig export-ignore
+/rector.php export-ignore
+/ecs.php export-ignore
+/.github export-ignore
