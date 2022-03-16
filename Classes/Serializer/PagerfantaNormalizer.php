@@ -1,9 +1,15 @@
 <?php
+
 declare(strict_types=1);
 
+/*
+ * This file is part of the "typo3_pagerfanta" Extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
 
 namespace Ssch\Typo3Pagerfanta\Serializer;
-
 
 use InvalidArgumentException;
 use Pagerfanta\PagerfantaInterface;
@@ -14,13 +20,14 @@ final class PagerfantaNormalizer implements NormalizerInterface, CacheableSuppor
 
     /**
      * @param mixed $object Object to normalize
-     *
-     * @throws InvalidArgumentException when the object given is not a supported type for the normalizer
      */
     public function normalize($object, $format = null, array $context = []): array
     {
-        if (!$object instanceof PagerfantaInterface) {
-            throw new InvalidArgumentException(sprintf('The object must be an instance of "%s".', PagerfantaInterface::class));
+        if (! $object instanceof PagerfantaInterface) {
+            throw new InvalidArgumentException(sprintf(
+                'The object must be an instance of "%s".',
+                PagerfantaInterface::class
+            ));
         }
 
         return [
