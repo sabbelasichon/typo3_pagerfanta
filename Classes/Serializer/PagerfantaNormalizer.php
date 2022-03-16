@@ -13,15 +13,17 @@ namespace Ssch\Typo3Pagerfanta\Serializer;
 
 use InvalidArgumentException;
 use Pagerfanta\PagerfantaInterface;
+use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 final class PagerfantaNormalizer implements NormalizerInterface, CacheableSupportsMethodInterface, NormalizerAwareInterface
 {
     use NormalizerAwareTrait;
 
-    /**
-     * @param mixed $object Object to normalize
-     */
-    public function normalize($object, $format = null, array $context = []): array
+
+    public function normalize($object, string $format = null, array $context = []): array
     {
         if (! $object instanceof PagerfantaInterface) {
             throw new InvalidArgumentException(sprintf(
@@ -43,7 +45,8 @@ final class PagerfantaNormalizer implements NormalizerInterface, CacheableSuppor
         ];
     }
 
-    public function supportsNormalization($data, $format = null): bool
+
+    public function supportsNormalization($data, string $format = null): bool
     {
         return $data instanceof PagerfantaInterface;
     }

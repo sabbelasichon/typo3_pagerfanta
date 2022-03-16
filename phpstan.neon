@@ -11,10 +11,6 @@ parameters:
   checkGenericClassInNonGenericObjectType: false
   ignoreErrors:
     -
-        message: "#^Parameter \\#1 \\$maxPerPage of method Pagerfanta\\\\PagerfantaInterface\\<mixed\\>\\:\\:setMaxPerPage\\(\\) expects int\\<1, max\\>, int given\\.$#"
-        count: 1
-        path: Classes/View/FluidView.php
-    -
         message: "#^Parameter \\#1 \\$adapter of static method Pagerfanta\\\\Pagerfanta\\<mixed\\>\\:\\:createForCurrentPageWithMaxPerPage\\(\\) expects Pagerfanta\\\\Adapter\\\\AdapterInterface\\<mixed\\>, Pagerfanta\\\\Adapter\\\\ArrayAdapter\\<string\\> given\\.$#"
         count: 1
         path: Classes/Controller/TestController.php
