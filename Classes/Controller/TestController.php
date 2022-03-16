@@ -51,9 +51,7 @@ final class TestController extends ActionController
     {
         $adapter = new ArrayAdapter(range('A', 'Z'));
 
-        $pagerfanta = Pagerfanta::createForCurrentPageWithMaxPerPage($adapter, 1, 1);
-        $pagerfanta->setCurrentPage($currentPage);
-
+        $pagerfanta = Pagerfanta::createForCurrentPageWithMaxPerPage($adapter, $currentPage, 1);
         $this->view->assign('pagerfanta', $pagerfanta);
     }
 }

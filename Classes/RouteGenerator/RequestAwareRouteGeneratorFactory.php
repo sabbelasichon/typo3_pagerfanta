@@ -37,6 +37,7 @@ final class RequestAwareRouteGeneratorFactory implements RouteGeneratorFactoryIn
                 'pageParameter' => 'currentPage',
                 'addQueryString' => true,
                 'argumentsToBeExcludedFromQueryString' => [],
+                'omitFirstPage' => false,
             ],
             $options
         );

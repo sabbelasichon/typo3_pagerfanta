@@ -52,11 +52,9 @@ final class PaginationViewHelper extends AbstractViewHelper
         $pagerfanta = $arguments['pagerfanta'];
         $routeGenerator = $arguments['routeGenerator'] ?? self::createRouteGenerator($options);
 
-        /** @var ViewFactoryInterface $viewFactory */
-        $viewFactory = GeneralUtility::getContainer()->get(ViewFactoryInterface::class);
+        $viewFactory = GeneralUtility::makeInstance(ViewFactoryInterface::class);
 
-        /** @var SettingsService $settingsService */
-        $settingsService = GeneralUtility::getContainer()->get(SettingsService::class);
+        $settingsService = GeneralUtility::makeInstance(SettingsService::class);
 
         $viewName ??= $settingsService->getByPath('default_view') ?? 'fluid';
 
@@ -70,8 +68,7 @@ final class PaginationViewHelper extends AbstractViewHelper
 
     private static function createRouteGenerator(array $options = []): RouteGeneratorInterface
     {
-        /** @var RouteGeneratorFactoryInterface $routeGeneratorFactory */
-        $routeGeneratorFactory = GeneralUtility::getContainer()->get(RouteGeneratorFactoryInterface::class);
+        $routeGeneratorFactory = GeneralUtility::makeInstance(RouteGeneratorFactoryInterface::class);
 
         return $routeGeneratorFactory->create($options);
     }
