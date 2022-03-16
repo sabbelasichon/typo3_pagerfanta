@@ -22,7 +22,6 @@ final class PagerfantaNormalizer implements NormalizerInterface, CacheableSuppor
 {
     use NormalizerAwareTrait;
 
-
     public function normalize($object, string $format = null, array $context = []): array
     {
         if (! $object instanceof PagerfantaInterface) {
@@ -44,7 +43,6 @@ final class PagerfantaNormalizer implements NormalizerInterface, CacheableSuppor
             ],
         ];
     }
-
 
     public function supportsNormalization($data, string $format = null): bool
     {
