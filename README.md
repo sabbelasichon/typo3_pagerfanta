@@ -19,7 +19,7 @@ plugin.tx_typo3pagerfanta {
     settings {
         # The default Pagerfanta view to use in your application
         default_view = fluid
-        # The default fluid template to use when using the Twig Pagerfanta view
+        # The default fluid template to use when using the Twig Pagerfanta view (available: Foundation6, MaterializeCss, Tailwind, TwitterBootstrap, TwitterBootstrap3, TwitterBootstrap4, TwitterBootstrap5
         default_fluid_template = EXT:typo3_pagerfanta/Resources/Private/Templates/TwitterBootstrap5.html
     }
 }

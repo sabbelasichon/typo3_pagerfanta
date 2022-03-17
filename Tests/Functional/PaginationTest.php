@@ -33,6 +33,7 @@ final class PaginationTest extends AbstractPaginationTest
         yield 'TwitterBootstrap3' => ['TwitterBootstrap3'];
         yield 'TwitterBootstrap4' => ['TwitterBootstrap4'];
         yield 'TwitterBootstrap5' => ['TwitterBootstrap5'];
+        yield 'MaterializeCss' => ['MaterializeCss'];
     }
 
     public function providePaginationViewOtherThanFluid(): Iterator
