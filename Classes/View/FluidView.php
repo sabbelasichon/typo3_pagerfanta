@@ -43,8 +43,8 @@ final class FluidView extends View
     public function render(PagerfantaInterface $pagerfanta, callable $routeGenerator, array $options = []): string
     {
         $options = array_replace([
-                'showPages' => true,
-            ], $options);
+            'showPages' => true,
+        ], $options);
 
         $this->initializePagerfanta($pagerfanta);
         $this->initializeOptions($options);

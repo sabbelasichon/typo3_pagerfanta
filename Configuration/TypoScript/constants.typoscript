@@ -4,12 +4,6 @@ plugin.tx_typo3pagerfanta {
         default_view = fluid
         # The default fluid template to use when using the Twig Pagerfanta view
         default_fluid_template = EXT:typo3_pagerfanta/Resources/Private/Templates/TwitterBootstrap5.html
-        exceptions_strategy {
-            # The exception strategy if requesting a page outside the available pages in a paginated list; valid options are "custom" or "to_http_not_found"
-            out_of_range_page = to_http_not_found
-            # The exception strategy if the current page is not an allowed value in a paginated list; valid options are "custom" or "to_http_not_found"
-            not_valid_current_page = to_http_not_found
-        }
     }
 
     view {
