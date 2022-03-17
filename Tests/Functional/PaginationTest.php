@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace Ssch\Typo3Pagerfanta\Tests\Functional;
 
-use DOMDocument;
 use Iterator;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 
@@ -27,7 +26,7 @@ final class PaginationTest extends AbstractPaginationTest
 
     public function providePaginationForFluidWithDifferentFrameworkTypes(): Iterator
     {
-        yield 'Default' =>  ['Default'];
+        yield 'Default' => ['Default'];
         yield 'Foundation6' => ['Foundation6'];
         yield 'Tailwind' => ['Tailwind'];
         yield 'TwitterBootstrap' => ['TwitterBootstrap'];
@@ -57,7 +56,6 @@ CODE_SAMPLE;
             ->__toString();
 
         self::assertStringContainsString('href="/p/2"', $content);
-
     }
 
     /**
@@ -75,7 +73,7 @@ CODE_SAMPLE;
         $response = $this->executeFrontendRequest((new InternalRequest())->withPageId(self::ROOT_PAGE_UID));
 
         $content = $response->getBody()
-                            ->__toString();
+            ->__toString();
 
         self::assertStringContainsString('href="/p/2"', $content);
         self::assertStringContainsString('href="/p/3"', $content);
