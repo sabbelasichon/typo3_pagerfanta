@@ -11,12 +11,12 @@ declare(strict_types=1);
 
 namespace Ssch\Typo3Pagerfanta\Serializer;
 
-use InvalidArgumentException;
 use Pagerfanta\PagerfantaInterface;
 use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Webmozart\Assert\Assert;
 
 final class PagerfantaNormalizer implements NormalizerInterface, CacheableSupportsMethodInterface, NormalizerAwareInterface
 {
@@ -24,12 +24,7 @@ final class PagerfantaNormalizer implements NormalizerInterface, CacheableSuppor
 
     public function normalize($object, string $format = null, array $context = []): array
     {
-        if (! $object instanceof PagerfantaInterface) {
-            throw new InvalidArgumentException(sprintf(
-                'The object must be an instance of "%s".',
-                PagerfantaInterface::class
-            ));
-        }
+        Assert::isInstanceOf($object, PagerfantaInterface::class);
 
         return [
             'items' => $this->normalizer->normalize($object->getIterator(), $format, $context),

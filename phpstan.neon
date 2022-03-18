@@ -9,6 +9,7 @@ parameters:
   inferPrivatePropertyTypeFromConstructor: true
   checkMissingIterableValueType: false
   checkGenericClassInNonGenericObjectType: false
+  treatPhpDocTypesAsCertain: false
   ignoreErrors:
     -
         message: "#^Parameter \\#1 \\$adapter of static method Pagerfanta\\\\Pagerfanta\\<mixed\\>\\:\\:createForCurrentPageWithMaxPerPage\\(\\) expects Pagerfanta\\\\Adapter\\\\AdapterInterface\\<mixed\\>, Pagerfanta\\\\Adapter\\\\ArrayAdapter\\<string\\> given\\.$#"

@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Ssch\Typo3Pagerfanta\ValueObject;
 
 use Pagerfanta\PagerfantaInterface;
+use Webmozart\Assert\Assert;
 
 final class Pagination
 {
@@ -36,6 +37,9 @@ final class Pagination
         int $nbPages,
         bool $showPages
     ) {
+        Assert::natural($currentPage);
+        Assert::natural($nbPages);
+
         $this->currentPage = $currentPage;
         $this->nbPages = $nbPages;
         $this->pagerfanta = $pagerfanta;

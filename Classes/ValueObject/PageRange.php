@@ -31,6 +31,8 @@ final class PageRange
      */
     public function __construct(int $startPage, int $endPage)
     {
+        Assert::natural($startPage);
+        Assert::natural($endPage);
         Assert::lessThanEq($startPage, $endPage);
         $this->startPage = $startPage;
         $this->endPage = $endPage;

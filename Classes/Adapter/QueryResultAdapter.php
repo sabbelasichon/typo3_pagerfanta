@@ -13,6 +13,7 @@ namespace Ssch\Typo3Pagerfanta\Adapter;
 
 use Pagerfanta\Adapter\AdapterInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use Webmozart\Assert\Assert;
 
 final class QueryResultAdapter implements AdapterInterface
 {
@@ -30,6 +31,9 @@ final class QueryResultAdapter implements AdapterInterface
 
     public function getSlice(int $offset, int $length): iterable
     {
+        Assert::natural($offset);
+        Assert::natural($length);
+
         return $this->queryResult
             ->getQuery()
             ->setLimit($length)

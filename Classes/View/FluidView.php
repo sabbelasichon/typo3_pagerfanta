@@ -21,7 +21,10 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 
 final class FluidView extends View
 {
-    public const DEFAULT_TEMPLATE = 'EXT:typo3_pagerfanta/Resources/Private/Templates/Default.html';
+    /**
+     * @var string
+     */
+    public const DEFAULT_TEMPLATE = 'EXT:typo3_pagerfanta/Resources/Private/Templates/TwitterBootstrap5.html';
 
     private string $template = self::DEFAULT_TEMPLATE;
 

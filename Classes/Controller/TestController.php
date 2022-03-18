@@ -36,9 +36,7 @@ final class TestController extends ActionController
     {
         $this->assignPagerfantaToView($currentPage);
 
-        $routeGenerator = new RouteGeneratorDecorator(function (int $page) {
-            return (string) $page;
-        });
+        $routeGenerator = new RouteGeneratorDecorator(fn (int $page) => (string) $page);
         $this->view->assign('routeGenerator', $routeGenerator);
 
         return $this->htmlResponse();
