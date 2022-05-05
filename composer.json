@@ -4,7 +4,6 @@
   "type": "typo3-cms-extension",
   "require": {
     "pagerfanta/core": "^3.5",
-    "pagerfanta/doctrine-dbal-adapter": "^3.5",
     "typo3/cms-core": "^10 || ^11",
     "typo3/cms-extbase": "^10 || ^11",
     "typo3/cms-fluid": "^10 || ^11",
