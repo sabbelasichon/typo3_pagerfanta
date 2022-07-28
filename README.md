@@ -73,6 +73,12 @@ If you want to use a different template for the pagination you can set the templ
 <pagerfanta:pagination pagerfanta="{pagination}" options="{template: 'EXT:typo3_pagerfanta/Resources/Private/Templates/Foundation6.html'}" />
 ```
 
+## Why this extension shines
+
+In my opinion this extension or better to say the Pagerfanta concept separates the route generation (RouteGenerator) from the view.
+So the view is totally agnostic about how to generate the page links itself and so it is fully reusable.
+To generate the routes inside the controller offers more flexibility instead of generating the page links inside the view itself.
+
 ## Further Documentation
 
 Please see the [BabDev website](https://www.babdev.com/open-source/packages/pagerfanta/docs/3.x/intro) for detailed information on how to use this extension.
