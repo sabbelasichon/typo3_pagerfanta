@@ -23,12 +23,12 @@ abstract class AbstractPaginationTest extends FunctionalTestCase
     protected const ROOT_PAGE_UID = 1;
 
     /**
-     * @var string[]
+     * @var non-empty-string[]
      */
     protected $testExtensionsToLoad = ['typo3conf/ext/typo3_pagerfanta'];
 
     /**
-     * @var array<int, string>
+     * @var non-empty-string[]
      */
     protected $coreExtensionsToLoad = ['extbase', 'fluid'];
 
