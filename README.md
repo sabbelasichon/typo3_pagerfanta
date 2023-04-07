@@ -40,7 +40,7 @@ final class TestController extends ActionController
         $jobs = $this->jobRepository->findAll();
 
         $queryResultAdapter = new QueryResultAdapter($jobs);
-        $pagination = Pagerfanta::createForCurrentPageWithMaxPerPage($adapter, $currentPage, 1);
+        $pagination = Pagerfanta::createForCurrentPageWithMaxPerPage($queryResultAdapter, $currentPage, 1);
 
         $this->view->assign('pagination', $pagination);
 
