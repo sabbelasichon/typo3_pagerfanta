@@ -56,7 +56,7 @@ final class PaginationViewHelper extends AbstractViewHelper
 
         $settingsService = GeneralUtility::makeInstance(SettingsService::class);
 
-        $viewName ??= $settingsService->getByPath('default_view') ?? 'fluid';
+        $viewName ??= $settingsService->getStringByPath('default_view') ?? 'fluid';
 
         if (! is_string($viewName)) {
             throw new InvalidArgumentException(sprintf('viewName must be a string. "%s" given', gettype($viewName)));

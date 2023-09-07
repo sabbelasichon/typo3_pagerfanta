@@ -56,7 +56,7 @@ final class SettingsService
     /**
      * @return mixed
      */
-    public function getByPath(string $path)
+    private function getByPath(string $path)
     {
         return ObjectAccess::getPropertyPath($this->getSettings(), $path);
     }
