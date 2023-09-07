@@ -1,11 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Cannot cast mixed to int\\.$#"
-			count: 1
-			path: Classes/Adapter/QueryBuilderAdapter.php
-
-		-
 			message: "#^Method Ssch\\\\Typo3Pagerfanta\\\\Adapter\\\\QueryBuilderAdapter\\:\\:getNbResults\\(\\) should return int\\<0, max\\> but returns int\\.$#"
 			count: 1
 			path: Classes/Adapter/QueryBuilderAdapter.php
