@@ -9,7 +9,7 @@ declare(strict_types=1);
  * LICENSE.txt file that was distributed with this source code.
  */
 
-defined('TYPO3_MODE') || die('Access denied.');
+defined('TYPO3') || die('Access denied.');
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
     'typo3_pagerfanta',
