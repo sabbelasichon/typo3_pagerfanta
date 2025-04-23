@@ -4,11 +4,11 @@ on:
   pull_request: null
   push:
     branches:
-      - master
+      - "main"
 
 env:
   # see https://github.com/composer/composer/issues/9368#issuecomment-718112361
-  COMPOSER_ROOT_VERSION: "dev-master"
+  COMPOSER_ROOT_VERSION: "dev-main"
 
 jobs:
   tests:
@@ -16,8 +16,8 @@ jobs:
     strategy:
       matrix:
         typo3-php-versions:
-          - { typo3: 11, php: 7.4 }
           - { typo3: 12, php: 8.1 }
+          - { typo3: 13, php: 8.2 }
 
     name: "Run tests with PHP ${{ matrix.typo3-php-versions.php }} using TYPO3 ${{ matrix.typo3-php-versions.typo3 }}"
     steps:

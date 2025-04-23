@@ -52,7 +52,7 @@ final class PaginationTest extends AbstractPaginationTest
 CODE_SAMPLE;
 
         $this->addTypoScriptToTemplateRecord(self::ROOT_PAGE_UID, $typoscriptSnippet);
-        $response = $this->executeFrontendRequest((new InternalRequest())->withPageId(self::ROOT_PAGE_UID));
+        $response = $this->executeFrontendSubRequest((new InternalRequest())->withPageId(self::ROOT_PAGE_UID));
 
         $content = $response->getBody()
             ->__toString();
@@ -72,7 +72,7 @@ CODE_SAMPLE;
 CODE_SAMPLE;
 
         $this->addTypoScriptToTemplateRecord(self::ROOT_PAGE_UID, $typoscriptSnippet);
-        $response = $this->executeFrontendRequest((new InternalRequest())->withPageId(self::ROOT_PAGE_UID));
+        $response = $this->executeFrontendSubRequest((new InternalRequest())->withPageId(self::ROOT_PAGE_UID));
 
         $content = $response->getBody()
             ->__toString();
