@@ -46,7 +46,7 @@ final class RequestAwareRouteGeneratorFactory implements RouteGeneratorFactoryIn
         /** @var ExtbaseRequestParameters $extbaseRequestParameters */
         $extbaseRequestParameters = $request->getAttribute('extbase');
 
-        if (null === $options['actionName']) {
+        if ($options['actionName'] === null) {
             $options['actionName'] = $extbaseRequestParameters->getControllerActionName();
         }
 

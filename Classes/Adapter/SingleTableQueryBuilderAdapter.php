@@ -37,7 +37,7 @@ final class SingleTableQueryBuilderAdapter extends QueryBuilderAdapter
 
     private function hasQueryBuilderJoins(QueryBuilder $queryBuilder): bool
     {
-        return [] !== $queryBuilder->getQueryPart('join');
+        return $queryBuilder->getQueryPart('join') !== [];
     }
 
     private function createCountQueryModifier(string $countField): \Closure
@@ -62,6 +62,6 @@ final class SingleTableQueryBuilderAdapter extends QueryBuilderAdapter
 
     private function countFieldHasNoAlias(string $countField): bool
     {
-        return false === strpos($countField, '.');
+        return strpos($countField, '.') === false;
     }
 }

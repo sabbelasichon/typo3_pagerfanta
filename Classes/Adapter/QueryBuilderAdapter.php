@@ -37,7 +37,7 @@ class QueryBuilderAdapter implements AdapterInterface
      */
     public function __construct(QueryBuilder $queryBuilder, callable $countQueryBuilderModifier)
     {
-        if (DoctrineQueryBuilder::SELECT !== $queryBuilder->getType()) {
+        if ($queryBuilder->getType() !== DoctrineQueryBuilder::SELECT) {
             throw new InvalidArgumentException('Only SELECT queries can be paginated.');
         }
 

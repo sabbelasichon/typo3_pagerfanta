@@ -79,7 +79,7 @@ final class FluidView extends View
     {
         if (isset($options['template'])) {
             $this->defaultTemplate = $options['template'];
-        } elseif ('' !== $this->defaultTemplate) {
+        } elseif ($this->defaultTemplate !== '') {
             $this->template = $this->defaultTemplate;
         }
 

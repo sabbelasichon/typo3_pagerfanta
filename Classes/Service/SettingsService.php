@@ -28,7 +28,7 @@ final class SettingsService
 
     public function getSettings(): array
     {
-        if (null === $this->settings) {
+        if ($this->settings === null) {
             $this->settings = $this->configurationManager->getConfiguration(
                 ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
                 'Typo3Pagerfanta',
@@ -41,7 +41,7 @@ final class SettingsService
     {
         $value = $this->getByPath($path);
 
-        if (null === $value) {
+        if ($value === null) {
             return '';
         }
 
