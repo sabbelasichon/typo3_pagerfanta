@@ -28,11 +28,15 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Web\RequestBuilder;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
-use TYPO3\CMS\Fluid\View\StandaloneView;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $containerConfigurator, ContainerBuilder $containerBuilder): void {
     $services = $containerConfigurator->services();
+
+    $services->set(\Ssch\Typo3Pagerfanta\Controller\TestController::class)
+        ->autowire()
+        ->autoconfigure()
+        ->public();
 
     // Pagerfanta views
     $services->set('pagerfanta.view.default', DefaultView::class)->tag('pagerfanta.view', [
@@ -63,7 +67,7 @@ return static function (ContainerConfigurator $containerConfigurator, ContainerB
     $services->set(SettingsService::class)->args([service(ConfigurationManagerInterface::class)])->public();
 
     $services->set('pagerfanta.view.fluid', FluidView::class)
-        ->args([service(StandaloneView::class), service(SettingsService::class)])
+        ->args([service(\TYPO3\CMS\Core\View\ViewFactoryInterface::class), service(SettingsService::class)])
         ->tag('pagerfanta.view', [
             'alias' => 'fluid',
         ]);

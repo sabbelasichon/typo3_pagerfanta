@@ -12,40 +12,40 @@ declare(strict_types=1);
 namespace Ssch\Typo3Pagerfanta\Serializer;
 
 use Pagerfanta\PagerfantaInterface;
-use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Webmozart\Assert\Assert;
 
-final class PagerfantaNormalizer implements NormalizerInterface, CacheableSupportsMethodInterface, NormalizerAwareInterface
+final class PagerfantaNormalizer implements NormalizerInterface, NormalizerAwareInterface
 {
     use NormalizerAwareTrait;
 
-    public function normalize($object, string $format = null, array $context = []): array
+    public function normalize(mixed $data, string $format = null, array $context = []): array
     {
-        Assert::isInstanceOf($object, PagerfantaInterface::class);
-
+        Assert::isInstanceOf($data, PagerfantaInterface::class);
         return [
-            'items' => $this->normalizer->normalize($object->getIterator(), $format, $context),
+            'items' => $this->normalizer->normalize($data->getIterator(), $format, $context),
             'pagination' => [
-                'current_page' => $object->getCurrentPage(),
-                'has_previous_page' => $object->hasPreviousPage(),
-                'has_next_page' => $object->hasNextPage(),
-                'per_page' => $object->getMaxPerPage(),
-                'total_items' => $object->getNbResults(),
-                'total_pages' => $object->getNbPages(),
+                'current_page' => $data->getCurrentPage(),
+                'has_previous_page' => $data->hasPreviousPage(),
+                'has_next_page' => $data->hasNextPage(),
+                'per_page' => $data->getMaxPerPage(),
+                'total_items' => $data->getNbResults(),
+                'total_pages' => $data->getNbPages(),
             ],
         ];
     }
 
-    public function supportsNormalization($data, string $format = null): bool
+    public function supportsNormalization($data, string $format = null, array $context = []): bool
     {
         return $data instanceof PagerfantaInterface;
     }
 
-    public function hasCacheableSupportsMethod(): bool
+    public function getSupportedTypes(?string $format): array
     {
-        return true;
+        return [
+            PagerfantaInterface::class => true,
+        ];
     }
 }

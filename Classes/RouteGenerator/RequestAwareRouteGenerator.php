@@ -17,17 +17,11 @@ use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 
 final class RequestAwareRouteGenerator implements RouteGeneratorInterface
 {
-    private UriBuilder $uriBuilder;
-
-    private array $options;
-
-    private Request $request;
-
-    public function __construct(UriBuilder $uriBuilder, Request $request, array $options = [])
-    {
-        $this->uriBuilder = $uriBuilder;
-        $this->options = $options;
-        $this->request = $request;
+    public function __construct(
+        private readonly UriBuilder $uriBuilder,
+        private readonly Request $request,
+        private array $options = []
+    ) {
     }
 
     public function __invoke(int $page): string

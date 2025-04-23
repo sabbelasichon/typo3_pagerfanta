@@ -28,16 +28,7 @@ final class SingleTableQueryBuilderAdapter extends QueryBuilderAdapter
      */
     public function __construct(QueryBuilder $queryBuilder, string $countField)
     {
-        if ($this->hasQueryBuilderJoins($queryBuilder)) {
-            throw new InvalidArgumentException('The query builder cannot have joins.');
-        }
-
         parent::__construct($queryBuilder, $this->createCountQueryModifier($countField));
-    }
-
-    private function hasQueryBuilderJoins(QueryBuilder $queryBuilder): bool
-    {
-        return $queryBuilder->getQueryPart('join') !== [];
     }
 
     private function createCountQueryModifier(string $countField): \Closure
@@ -46,7 +37,7 @@ final class SingleTableQueryBuilderAdapter extends QueryBuilderAdapter
 
         return function (QueryBuilder $queryBuilder) use ($select): void {
             $queryBuilder->select($select)
-                ->resetQueryPart('orderBy')
+                ->resetOrderBy()
                 ->setMaxResults(1);
         };
     }
@@ -62,6 +53,6 @@ final class SingleTableQueryBuilderAdapter extends QueryBuilderAdapter
 
     private function countFieldHasNoAlias(string $countField): bool
     {
-        return strpos($countField, '.') === false;
+        return ! str_contains($countField, '.');
     }
 }

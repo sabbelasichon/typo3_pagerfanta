@@ -11,9 +11,7 @@ declare(strict_types=1);
 
 namespace Ssch\Typo3Pagerfanta\ViewHelpers;
 
-use Closure;
 use Pagerfanta\RouteGenerator\RouteGeneratorInterface;
-use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 final class PageViewHelper extends AbstractViewHelper
@@ -34,14 +32,15 @@ final class PageViewHelper extends AbstractViewHelper
         $this->registerArgument('page', 'int', 'The page', true);
     }
 
-    public static function renderStatic(
-        array $arguments,
-        Closure $renderChildrenClosure,
-        RenderingContextInterface $renderingContext
-    ): string {
-        $page = (int) $arguments['page'];
-        $routeGenerator = $arguments['route_generator'];
+    public function render(): string
+    {
+        $page = $this->arguments['page'] ?? null;
+        $routeGenerator = $this->arguments['route_generator'] ?? null;
 
-        return $routeGenerator($page);
+        if (! is_callable($routeGenerator)) {
+            throw new \InvalidArgumentException('Route generator must be callable');
+        }
+
+        return $routeGenerator((int) $page);
     }
 }

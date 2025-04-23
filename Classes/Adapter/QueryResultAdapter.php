@@ -15,13 +15,11 @@ use Pagerfanta\Adapter\AdapterInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use Webmozart\Assert\Assert;
 
-final class QueryResultAdapter implements AdapterInterface
+final readonly class QueryResultAdapter implements AdapterInterface
 {
-    private QueryResultInterface $queryResult;
-
-    public function __construct(QueryResultInterface $queryResult)
-    {
-        $this->queryResult = $queryResult;
+    public function __construct(
+        private QueryResultInterface $queryResult
+    ) {
     }
 
     public function getNbResults(): int

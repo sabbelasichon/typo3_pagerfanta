@@ -11,9 +11,7 @@ declare(strict_types=1);
 
 namespace Ssch\Typo3Pagerfanta\Adapter;
 
-use Doctrine\DBAL\Query\QueryBuilder as DoctrineQueryBuilder;
 use Pagerfanta\Adapter\AdapterInterface;
-use Pagerfanta\Exception\InvalidArgumentException;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 
 /**
@@ -24,7 +22,7 @@ use TYPO3\CMS\Core\Database\Query\QueryBuilder;
  */
 class QueryBuilderAdapter implements AdapterInterface
 {
-    private QueryBuilder $queryBuilder;
+    private readonly QueryBuilder $queryBuilder;
 
     /**
      * @var callable
@@ -37,10 +35,6 @@ class QueryBuilderAdapter implements AdapterInterface
      */
     public function __construct(QueryBuilder $queryBuilder, callable $countQueryBuilderModifier)
     {
-        if ($queryBuilder->getType() !== DoctrineQueryBuilder::SELECT) {
-            throw new InvalidArgumentException('Only SELECT queries can be paginated.');
-        }
-
         $this->queryBuilder = clone $queryBuilder;
         $this->countQueryBuilderModifier = $countQueryBuilderModifier;
     }

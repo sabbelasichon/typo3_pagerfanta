@@ -14,7 +14,7 @@ namespace Ssch\Typo3Pagerfanta\Tests\Functional;
 use Iterator;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 
-final class PaginationWithCustomRouteGeneratorTest extends AbstractPaginationTest
+final class PaginationWithCustomRouteGeneratorTest extends AbstractPaginationTestCase
 {
     protected function setUp(): void
     {
@@ -26,24 +26,22 @@ final class PaginationWithCustomRouteGeneratorTest extends AbstractPaginationTes
         ]);
     }
 
-    public function providePaginationViews(): Iterator
+    public static function providePaginationViews(): Iterator
     {
         yield ['Default'];
     }
 
-    /**
-     * @dataProvider providePaginationViews
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providePaginationViews')]
     public function testPaginationWithFluidViewAndWithDifferentFrameworkIntegrationsRendersProperly(
         string $paginationFrameworkType
     ): void {
         $typoscriptSnippet = <<<CODE_SAMPLE
     plugin.tx_typo3pagerfanta.settings.default_view = fluid
-    plugin.tx_typo3pagerfanta.settings.default_fluid_template = EXT:typo3_pagerfanta/Resources/Private/Templates/${paginationFrameworkType}.html
+    plugin.tx_typo3pagerfanta.settings.default_fluid_template = EXT:typo3_pagerfanta/Resources/Private/Templates/{$paginationFrameworkType}.html
 CODE_SAMPLE;
 
         $this->addTypoScriptToTemplateRecord(self::ROOT_PAGE_UID, $typoscriptSnippet);
-        $response = $this->executeFrontendRequest((new InternalRequest())->withPageId(self::ROOT_PAGE_UID));
+        $response = $this->executeFrontendSubRequest((new InternalRequest())->withPageId(self::ROOT_PAGE_UID));
 
         $content = $response->getBody()
             ->__toString();
