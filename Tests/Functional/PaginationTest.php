@@ -14,7 +14,7 @@ namespace Ssch\Typo3Pagerfanta\Tests\Functional;
 use Iterator;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 
-final class PaginationTest extends AbstractPaginationTest
+final class PaginationTest extends AbstractPaginationTestCase
 {
     protected function setUp(): void
     {
@@ -24,7 +24,7 @@ final class PaginationTest extends AbstractPaginationTest
         ]);
     }
 
-    public function providePaginationForFluidWithDifferentFrameworkTypes(): Iterator
+    public static function providePaginationForFluidWithDifferentFrameworkTypes(): Iterator
     {
         yield 'Default' => ['Default'];
         yield 'Foundation6' => ['Foundation6'];
@@ -37,18 +37,16 @@ final class PaginationTest extends AbstractPaginationTest
         yield 'Bulma' => ['Bulma'];
     }
 
-    public function providePaginationViewOtherThanFluid(): Iterator
+    public static function providePaginationViewOtherThanFluid(): Iterator
     {
-        yield 'Default' => ['default', 'Default'];
+        yield 'Default' => ['default'];
     }
 
-    /**
-     * @dataProvider providePaginationViewOtherThanFluid
-     */
-    public function testPaginationWithForDifferentViewsProperly(string $viewType, string $expectedTemplate): void
+    #[\PHPUnit\Framework\Attributes\DataProvider('providePaginationViewOtherThanFluid')]
+    public function testPaginationWithForDifferentViewsProperly(string $viewType): void
     {
         $typoscriptSnippet = <<<CODE_SAMPLE
-    plugin.tx_typo3pagerfanta.settings.default_view = ${viewType}
+    plugin.tx_typo3pagerfanta.settings.default_view = {$viewType}
 CODE_SAMPLE;
 
         $this->addTypoScriptToTemplateRecord(self::ROOT_PAGE_UID, $typoscriptSnippet);
@@ -60,15 +58,13 @@ CODE_SAMPLE;
         self::assertStringContainsString('href="/p/2"', $content);
     }
 
-    /**
-     * @dataProvider providePaginationForFluidWithDifferentFrameworkTypes
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providePaginationForFluidWithDifferentFrameworkTypes')]
     public function testPaginationWithFluidViewAndWithDifferentFrameworkIntegrationsRendersProperly(
         string $paginationFrameworkType
     ): void {
         $typoscriptSnippet = <<<CODE_SAMPLE
     plugin.tx_typo3pagerfanta.settings.default_view = fluid
-    plugin.tx_typo3pagerfanta.settings.default_fluid_template = EXT:typo3_pagerfanta/Resources/Private/Templates/${paginationFrameworkType}.html
+    plugin.tx_typo3pagerfanta.settings.default_fluid_template = EXT:typo3_pagerfanta/Resources/Private/Templates/{$paginationFrameworkType}.html
 CODE_SAMPLE;
 
         $this->addTypoScriptToTemplateRecord(self::ROOT_PAGE_UID, $typoscriptSnippet);

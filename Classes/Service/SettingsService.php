@@ -19,11 +19,9 @@ final class SettingsService
 {
     private ?array $settings = null;
 
-    private ConfigurationManagerInterface $configurationManager;
-
-    public function __construct(ConfigurationManagerInterface $configurationManager)
-    {
-        $this->configurationManager = $configurationManager;
+    public function __construct(
+        private readonly ConfigurationManagerInterface $configurationManager
+    ) {
     }
 
     public function getSettings(): array
@@ -53,10 +51,7 @@ final class SettingsService
         return $value;
     }
 
-    /**
-     * @return mixed
-     */
-    private function getByPath(string $path)
+    private function getByPath(string $path): mixed
     {
         return ObjectAccess::getPropertyPath($this->getSettings(), $path);
     }

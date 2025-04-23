@@ -13,20 +13,18 @@ namespace Ssch\Typo3Pagerfanta\RouteGenerator;
 
 use Pagerfanta\RouteGenerator\RouteGeneratorFactoryInterface;
 use Pagerfanta\RouteGenerator\RouteGeneratorInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\Web\RequestBuilder;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
-final class RequestAwareRouteGeneratorFactory implements RouteGeneratorFactoryInterface
+final readonly class RequestAwareRouteGeneratorFactory implements RouteGeneratorFactoryInterface
 {
-    private RequestBuilder $requestBuilder;
-
-    private UriBuilder $uriBuilder;
-
-    public function __construct(UriBuilder $uriBuilder, RequestBuilder $requestBuilder)
-    {
-        $this->requestBuilder = $requestBuilder;
-        $this->uriBuilder = $uriBuilder;
+    public function __construct(
+        private UriBuilder $uriBuilder,
+        private RequestBuilder $requestBuilder
+    ) {
     }
 
     public function create(array $options = []): RouteGeneratorInterface
@@ -43,6 +41,11 @@ final class RequestAwareRouteGeneratorFactory implements RouteGeneratorFactoryIn
         );
 
         $request = $this->requestBuilder->build($GLOBALS['TYPO3_REQUEST']);
+        $request = $request->withAttribute(
+            'currentContentObject',
+            GeneralUtility::makeInstance(ContentObjectRenderer::class)
+        );
+
         /** @var ExtbaseRequestParameters $extbaseRequestParameters */
         $extbaseRequestParameters = $request->getAttribute('extbase');
 

@@ -14,37 +14,28 @@ namespace Ssch\Typo3Pagerfanta\ValueObject;
 use Pagerfanta\PagerfantaInterface;
 use Webmozart\Assert\Assert;
 
-final class Pagination
+final readonly class Pagination
 {
     private int $currentPage;
 
     private int $nbPages;
-
-    private PagerfantaInterface $pagerfanta;
-
-    private PageRange $pageRange;
-
-    private bool $showPages;
 
     /**
      * @phpstan-param int<0, max> $currentPage
      * @phpstan-param int<0, max> $nbPages
      */
     public function __construct(
-        PagerfantaInterface $pagerfanta,
-        PageRange $pageRange,
+        private PagerfantaInterface $pagerfanta,
+        private PageRange $pageRange,
         int $currentPage,
         int $nbPages,
-        bool $showPages
+        private bool $showPages
     ) {
         Assert::natural($currentPage);
         Assert::natural($nbPages);
 
         $this->currentPage = $currentPage;
         $this->nbPages = $nbPages;
-        $this->pagerfanta = $pagerfanta;
-        $this->pageRange = $pageRange;
-        $this->showPages = $showPages;
     }
 
     public function getHasPreviousPage(): bool

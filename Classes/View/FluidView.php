@@ -17,7 +17,9 @@ use Pagerfanta\View\View;
 use Ssch\Typo3Pagerfanta\Service\SettingsService;
 use Ssch\Typo3Pagerfanta\ValueObject\PageRange;
 use Ssch\Typo3Pagerfanta\ValueObject\Pagination;
-use TYPO3\CMS\Fluid\View\StandaloneView;
+use TYPO3\CMS\Core\View\ViewFactoryData;
+use TYPO3\CMS\Core\View\ViewFactoryInterface;
+use TYPO3\CMS\Fluid\View\FluidViewAdapter;
 
 final class FluidView extends View
 {
@@ -28,18 +30,26 @@ final class FluidView extends View
 
     private string $template = self::DEFAULT_TEMPLATE;
 
-    private StandaloneView $standaloneView;
-
     private string $defaultTemplate;
 
     private bool $showPages = false;
 
-    public function __construct(StandaloneView $standaloneView, SettingsService $settingsService)
-    {
-        $this->standaloneView = $standaloneView;
-        $this->standaloneView->getTemplatePaths()
-            ->fillDefaultsByPackageName('typo3_pagerfanta');
+    private FluidViewAdapter $view;
 
+    public function __construct(
+        private readonly ViewFactoryInterface $viewFactory,
+        SettingsService $settingsService
+    ) {
+        $viewFactoryData = new ViewFactoryData(
+            ['EXT:typo3_pagerfanta/Resources/Private/Templates/'],
+            ['EXT:typo3_pagerfanta/Resources/Private/Partials/']
+        );
+        $view = $this->viewFactory->create($viewFactoryData);
+        if (! $view instanceof FluidViewAdapter) {
+            throw new \UnexpectedValueException('View must be of type FluidViewAdapter');
+        }
+
+        $this->view = $view;
         $this->defaultTemplate = $settingsService->getStringByPath('default_fluid_template');
     }
 
@@ -53,9 +63,11 @@ final class FluidView extends View
         $this->initializeOptions($options);
         $this->calculateStartAndEndPage();
 
-        $this->standaloneView->setTemplatePathAndFilename($this->template);
+        $this->view->getRenderingContext()
+            ->getTemplatePaths()
+            ->setTemplatePathAndFilename($this->template);
 
-        $this->standaloneView->assignMultiple([
+        $this->view->assignMultiple([
             'pagination' => new Pagination(
                 $pagerfanta,
                 new PageRange((int) $this->startPage, (int) $this->endPage),
@@ -67,7 +79,7 @@ final class FluidView extends View
             'options' => $options,
         ]);
 
-        return $this->standaloneView->render();
+        return $this->view->render();
     }
 
     public function getName(): string

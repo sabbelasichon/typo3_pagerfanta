@@ -13,7 +13,7 @@ namespace Ssch\Typo3Pagerfanta\ValueObject;
 
 use Webmozart\Assert\Assert;
 
-final class PageRange
+final readonly class PageRange
 {
     /**
      * @phpstan-var int<0, max>

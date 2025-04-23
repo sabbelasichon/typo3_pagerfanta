@@ -15,7 +15,7 @@ use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
-abstract class AbstractPaginationTest extends FunctionalTestCase
+abstract class AbstractPaginationTestCase extends FunctionalTestCase
 {
     /**
      * @var int
@@ -41,7 +41,7 @@ abstract class AbstractPaginationTest extends FunctionalTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/pages.xml');
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/Database/pages.csv');
         $this->setUpSiteConfiguration();
     }
 
