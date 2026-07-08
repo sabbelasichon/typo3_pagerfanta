@@ -13,6 +13,9 @@ namespace Ssch\Typo3Pagerfanta\RouteGenerator;
 
 use Pagerfanta\RouteGenerator\RouteGeneratorFactoryInterface;
 use Pagerfanta\RouteGenerator\RouteGeneratorInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Http\ServerRequest;
+use TYPO3\CMS\Core\Http\ServerRequestFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\Web\RequestBuilder;
@@ -40,10 +43,15 @@ final readonly class RequestAwareRouteGeneratorFactory implements RouteGenerator
             $options
         );
 
-        $request = $this->requestBuilder->build($GLOBALS['TYPO3_REQUEST']);
+        /** @var ServerRequestInterface $serverRequest */
+        $serverRequest = $GLOBALS['TYPO3_REQUEST'];
+
+        $request = $this->requestBuilder->build($serverRequest);
+        $contentObjectRenderer = GeneralUtility::makeInstance(ContentObjectRenderer::class);
+        $contentObjectRenderer->setRequest($serverRequest);
         $request = $request->withAttribute(
             'currentContentObject',
-            GeneralUtility::makeInstance(ContentObjectRenderer::class)
+            $contentObjectRenderer
         );
 
         /** @var ExtbaseRequestParameters $extbaseRequestParameters */
