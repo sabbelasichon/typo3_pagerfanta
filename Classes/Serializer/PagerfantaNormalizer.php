@@ -21,7 +21,7 @@ final class PagerfantaNormalizer implements NormalizerInterface, NormalizerAware
 {
     use NormalizerAwareTrait;
 
-    public function normalize(mixed $data, string $format = null, array $context = []): array
+    public function normalize(mixed $data, ?string $format = null, array $context = []): array
     {
         Assert::isInstanceOf($data, PagerfantaInterface::class);
         return [
@@ -37,7 +37,7 @@ final class PagerfantaNormalizer implements NormalizerInterface, NormalizerAware
         ];
     }
 
-    public function supportsNormalization($data, string $format = null, array $context = []): bool
+    public function supportsNormalization($data, ?string $format = null, array $context = []): bool
     {
         return $data instanceof PagerfantaInterface;
     }

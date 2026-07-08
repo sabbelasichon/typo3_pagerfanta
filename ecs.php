@@ -19,46 +19,41 @@ use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayOpenerAndCloserNewlineFixer
 use Symplify\CodingStandard\Fixer\ArrayNotation\StandaloneLineInMultilineArrayFixer;
 use Symplify\CodingStandard\Fixer\LineLength\LineLengthFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
-use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
 
-return static function (ECSConfig $ecsConfig): void {
-    $header = <<<CODE_SAMPLE
+$header = <<<CODE_SAMPLE
 This file is part of the "typo3_pagerfanta" Extension for TYPO3 CMS.
 
 For the full copyright and license information, please read the
 LICENSE.txt file that was distributed with this source code.
 CODE_SAMPLE;
 
-    $ecsConfig->paths([
+return ECSConfig::configure()
+    ->withPaths([
         __DIR__ . '/Classes',
         __DIR__ . '/Configuration',
         __DIR__ . '/Tests',
         __DIR__ . '/ecs.php',
         __DIR__ . '/rector.php',
-    ]);
-
-    $ecsConfig->ruleWithConfiguration(ArraySyntaxFixer::class, [
+    ])
+    ->withConfiguredRule(ArraySyntaxFixer::class, [
         'syntax' => 'short',
-    ]);
-
-    $ecsConfig->ruleWithConfiguration(HeaderCommentFixer::class, [
+    ])
+    ->withConfiguredRule(GeneralPhpdocAnnotationRemoveFixer::class, [
+        'annotations' => ['throws', 'author', 'package', 'group'],
+    ])
+    ->withConfiguredRule(NoSuperfluousPhpdocTagsFixer::class, [
+        'allow_mixed' => true,
+    ])
+    ->withConfiguredRule(HeaderCommentFixer::class, [
         'header' => $header,
         'separate' => 'both',
-    ]);
-    $ecsConfig->rule(StandaloneLineInMultilineArrayFixer::class);
-    $ecsConfig->rule(ArrayOpenerAndCloserNewlineFixer::class);
-
-    $ecsConfig->ruleWithConfiguration(GeneralPhpdocAnnotationRemoveFixer::class, [
-        'annotations' => ['throws', 'author', 'package', 'group'],
-    ]);
-
-    $ecsConfig->ruleWithConfiguration(NoSuperfluousPhpdocTagsFixer::class, [
-        'allow_mixed' => true,
-    ]);
-
-    $ecsConfig->sets([SetList::PSR_12, SetList::SYMPLIFY, SetList::COMMON, SetList::CLEAN_CODE]);
-
-    $ecsConfig->rule(DeclareStrictTypesFixer::class);
-    $ecsConfig->rule(LineLengthFixer::class);
-    $ecsConfig->rule(YodaStyleFixer::class);
-};
+    ])
+    ->withRules([
+        StandaloneLineInMultilineArrayFixer::class,
+        ArrayOpenerAndCloserNewlineFixer::class,
+        DeclareStrictTypesFixer::class,
+        LineLengthFixer::class,
+        YodaStyleFixer::class,
+    ])
+    ->withPreparedSets(psr12: true, common: true, cleanCode: true)
+;

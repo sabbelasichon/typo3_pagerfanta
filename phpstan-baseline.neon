@@ -1,12 +1,14 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Method Ssch\\\\Typo3Pagerfanta\\\\Adapter\\\\QueryBuilderAdapter\\:\\:getNbResults\\(\\) should return int\\<0, max\\> but returns int\\.$#"
+			message: '#^Method Ssch\\Typo3Pagerfanta\\Adapter\\QueryBuilderAdapter\:\:getNbResults\(\) should return int\<0, max\> but returns int\.$#'
+			identifier: return.type
 			count: 1
 			path: Classes/Adapter/QueryBuilderAdapter.php
 
 		-
-			message: "#^Method Ssch\\\\Typo3Pagerfanta\\\\Adapter\\\\QueryBuilderAdapter\\:\\:getSlice\\(\\) should return iterable\\<\\(int\\|string\\), T\\> but returns array\\<int, array\\<string, mixed\\>\\>\\.$#"
+			message: '#^Method Ssch\\Typo3Pagerfanta\\Adapter\\QueryBuilderAdapter\:\:getSlice\(\) should return iterable\<\(int\|string\), T\> but returns list\<array\<string, mixed\>\>\.$#'
+			identifier: return.type
 			count: 1
 			path: Classes/Adapter/QueryBuilderAdapter.php
 

@@ -12,14 +12,14 @@ declare(strict_types=1);
 namespace Ssch\Typo3Pagerfanta\RouteGenerator;
 
 use Pagerfanta\RouteGenerator\RouteGeneratorInterface;
-use TYPO3\CMS\Extbase\Mvc\Request;
+use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 
 final class RequestAwareRouteGenerator implements RouteGeneratorInterface
 {
     public function __construct(
         private readonly UriBuilder $uriBuilder,
-        private readonly Request $request,
+        private readonly RequestInterface $request,
         private array $options = []
     ) {
     }
