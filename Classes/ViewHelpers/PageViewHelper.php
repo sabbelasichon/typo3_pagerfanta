@@ -11,7 +11,8 @@ declare(strict_types=1);
 
 namespace Ssch\Typo3Pagerfanta\ViewHelpers;
 
-use Pagerfanta\RouteGenerator\RouteGeneratorInterface;
+use Pagerfanta\Position\PagePosition;
+use Pagerfanta\RouteGenerator\PositionRouteGeneratorInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 final class PageViewHelper extends AbstractViewHelper
@@ -25,7 +26,7 @@ final class PageViewHelper extends AbstractViewHelper
     {
         $this->registerArgument(
             'route_generator',
-            RouteGeneratorInterface::class,
+            PositionRouteGeneratorInterface::class,
             'The pagerfanta route generator',
             true
         );
@@ -41,6 +42,6 @@ final class PageViewHelper extends AbstractViewHelper
             throw new \InvalidArgumentException('Route generator must be callable');
         }
 
-        return $routeGenerator((int) $page);
+        return $routeGenerator(new PagePosition($page));
     }
 }

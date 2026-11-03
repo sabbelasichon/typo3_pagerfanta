@@ -13,15 +13,21 @@ namespace Ssch\Typo3Pagerfanta\ViewHelpers;
 
 use InvalidArgumentException;
 use Pagerfanta\PagerfantaInterface;
-use Pagerfanta\RouteGenerator\RouteGeneratorFactoryInterface;
-use Pagerfanta\RouteGenerator\RouteGeneratorInterface;
+use Pagerfanta\RouteGenerator\PositionRouteGeneratorFactoryInterface;
+use Pagerfanta\RouteGenerator\PositionRouteGeneratorInterface;
 use Pagerfanta\View\ViewFactoryInterface;
 use Ssch\Typo3Pagerfanta\Service\SettingsService;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 final class PaginationViewHelper extends AbstractViewHelper
 {
+    public function __construct(
+        private readonly PositionRouteGeneratorFactoryInterface $routeGeneratorFactory,
+        private readonly SettingsService $settingsService,
+        private readonly ViewFactoryInterface $viewFactory
+    ) {
+    }
+
     /**
      * @var bool
      */
@@ -34,9 +40,8 @@ final class PaginationViewHelper extends AbstractViewHelper
         $this->registerArgument('options', 'array', 'The options', false, []);
         $this->registerArgument(
             'routeGenerator',
-            RouteGeneratorInterface::class,
+            PositionRouteGeneratorInterface::class,
             'Different RouteGenerator implementation',
-            false
         );
     }
 
@@ -45,26 +50,18 @@ final class PaginationViewHelper extends AbstractViewHelper
         $viewName = $this->arguments['viewName'];
         $options = $this->arguments['options'];
         $pagerfanta = $this->arguments['pagerfanta'];
-        $routeGenerator = $this->arguments['routeGenerator'] ?? self::createRouteGenerator($options);
+        $routeGenerator = $this->arguments['routeGenerator'] ?? $this->routeGeneratorFactory->createPositionRouteGenerator(
+            $options
+        );
 
-        $viewFactory = GeneralUtility::makeInstance(ViewFactoryInterface::class);
-
-        $settingsService = GeneralUtility::makeInstance(SettingsService::class);
-
-        $viewName ??= $settingsService->getStringByPath('default_view') ?? 'fluid';
+        $defaultView = $this->settingsService->getStringByPath('default_view');
+        $viewName ??= '' !== $defaultView ? $defaultView : 'fluid';
 
         if (! is_string($viewName)) {
             throw new InvalidArgumentException(sprintf('viewName must be a string. "%s" given', gettype($viewName)));
         }
 
-        return $viewFactory->get($viewName)
+        return $this->viewFactory->get($viewName)
             ->render($pagerfanta, $routeGenerator, $options);
-    }
-
-    private static function createRouteGenerator(array $options = []): RouteGeneratorInterface
-    {
-        $routeGeneratorFactory = GeneralUtility::makeInstance(RouteGeneratorFactoryInterface::class);
-
-        return $routeGeneratorFactory->create($options);
     }
 }

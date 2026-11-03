@@ -11,21 +11,27 @@ declare(strict_types=1);
 
 namespace Ssch\Typo3Pagerfanta\RouteGenerator;
 
-use Pagerfanta\RouteGenerator\RouteGeneratorInterface;
+use Pagerfanta\Position\PagePosition;
+use Pagerfanta\Position\Position;
+use Pagerfanta\RouteGenerator\PositionRouteGeneratorInterface;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 
-final class RequestAwareRouteGenerator implements RouteGeneratorInterface
+final readonly class RequestAwareRouteGenerator implements PositionRouteGeneratorInterface
 {
     public function __construct(
-        private readonly UriBuilder $uriBuilder,
-        private readonly RequestInterface $request,
+        private UriBuilder $uriBuilder,
+        private RequestInterface $request,
         private array $options = []
     ) {
     }
 
-    public function __invoke(int $page): string
+    public function __invoke(Position $position): string
     {
+        if (! $position instanceof PagePosition) {
+            throw new \InvalidArgumentException('Only PagePosition is supported');
+        }
+
         $this->uriBuilder->reset();
         $this->uriBuilder->setRequest($this->request);
         $this->uriBuilder->setAddQueryString((bool) $this->options['addQueryString']);
@@ -38,7 +44,7 @@ final class RequestAwareRouteGenerator implements RouteGeneratorInterface
         }
 
         return $this->uriBuilder->uriFor($this->options['actionName'], [
-            $this->options['pageParameter'] => $page,
+            $this->options['pageParameter'] => $position->page,
         ]);
     }
 }

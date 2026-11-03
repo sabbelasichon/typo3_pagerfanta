@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Ssch\Typo3Pagerfanta\View;
 
 use Pagerfanta\PagerfantaInterface;
-use Pagerfanta\RouteGenerator\RouteGeneratorDecorator;
+use Pagerfanta\RouteGenerator\PositionRouteGeneratorDecorator;
 use Pagerfanta\View\View;
 use Ssch\Typo3Pagerfanta\Service\SettingsService;
 use Ssch\Typo3Pagerfanta\ValueObject\PageRange;
@@ -102,8 +102,8 @@ final class FluidView extends View
         parent::initializeOptions($options);
     }
 
-    private function decorateRouteGenerator(callable $routeGenerator): RouteGeneratorDecorator
+    private function decorateRouteGenerator(callable $routeGenerator): PositionRouteGeneratorDecorator
     {
-        return new RouteGeneratorDecorator($routeGenerator);
+        return new PositionRouteGeneratorDecorator($routeGenerator);
     }
 }

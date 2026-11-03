@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Ssch\Typo3Pagerfanta\RouteGenerator;
 
-use Pagerfanta\RouteGenerator\RouteGeneratorFactoryInterface;
-use Pagerfanta\RouteGenerator\RouteGeneratorInterface;
+use Pagerfanta\RouteGenerator\PositionRouteGeneratorFactoryInterface;
+use Pagerfanta\RouteGenerator\PositionRouteGeneratorInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
@@ -20,7 +20,7 @@ use TYPO3\CMS\Extbase\Mvc\Web\RequestBuilder;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
-final readonly class RequestAwareRouteGeneratorFactory implements RouteGeneratorFactoryInterface
+final readonly class RequestAwareRouteGeneratorFactory implements PositionRouteGeneratorFactoryInterface
 {
     public function __construct(
         private UriBuilder $uriBuilder,
@@ -28,7 +28,7 @@ final readonly class RequestAwareRouteGeneratorFactory implements RouteGenerator
     ) {
     }
 
-    public function create(array $options = []): RouteGeneratorInterface
+    public function createPositionRouteGenerator(array $options = []): PositionRouteGeneratorInterface
     {
         $options = array_replace(
             [

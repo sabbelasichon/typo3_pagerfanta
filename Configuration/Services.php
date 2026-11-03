@@ -9,7 +9,7 @@ declare(strict_types=1);
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Pagerfanta\RouteGenerator\RouteGeneratorFactoryInterface;
+use Pagerfanta\RouteGenerator\PositionRouteGeneratorFactoryInterface;
 use Pagerfanta\View\DefaultView;
 use Pagerfanta\View\Foundation6View;
 use Pagerfanta\View\SemanticUiView;
@@ -21,22 +21,22 @@ use Pagerfanta\View\ViewFactory;
 use Pagerfanta\View\ViewFactoryInterface;
 use Ssch\Typo3Pagerfanta\DependencyInjection\CompilerPass\RegisterPagerfantaViewsPass;
 use Ssch\Typo3Pagerfanta\RouteGenerator\RequestAwareRouteGeneratorFactory;
-use Ssch\Typo3Pagerfanta\Service\SettingsService;
 use Ssch\Typo3Pagerfanta\View\FluidView;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Extbase\Mvc\Web\RequestBuilder;
-use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
-use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $containerConfigurator, ContainerBuilder $containerBuilder): void {
     $services = $containerConfigurator->services();
 
-    $services->set(\Ssch\Typo3Pagerfanta\Controller\TestController::class)
+    $services->defaults()
+        ->private()
         ->autowire()
-        ->autoconfigure()
-        ->public();
+        ->autoconfigure();
+
+    $services->load('Ssch\\Typo3Pagerfanta\\', __DIR__ . '/../Classes/')->exclude([
+        __DIR__ . '/../Classes/ValueObject',
+        __DIR__ . '/../Classes/View',
+    ]);
 
     // Pagerfanta views
     $services->set('pagerfanta.view.default', DefaultView::class)->tag('pagerfanta.view', [
@@ -61,23 +61,19 @@ return static function (ContainerConfigurator $containerConfigurator, ContainerB
         'alias' => 'twitter_bootstrap5',
     ]);
 
-    $services->set('pagerfanta.view_factory', ViewFactory::class)->public();
-    $services->alias(ViewFactoryInterface::class, 'pagerfanta.view_factory')->public();
-
-    $services->set(SettingsService::class)->args([service(ConfigurationManagerInterface::class)])->public();
+    $services->set('pagerfanta.view_factory', ViewFactory::class);
+    $services->alias(ViewFactoryInterface::class, 'pagerfanta.view_factory');
 
     $services->set('pagerfanta.view.fluid', FluidView::class)
-        ->args([service(\TYPO3\CMS\Core\View\ViewFactoryInterface::class), service(SettingsService::class)])
+        ->autowire()
         ->tag('pagerfanta.view', [
             'alias' => 'fluid',
         ]);
 
     $services->set('pagerfanta.route_generator_factory', RequestAwareRouteGeneratorFactory::class)
-        ->args([service(UriBuilder::class), service(RequestBuilder::class)])
-        ->public();
+        ->autowire();
 
-    $services->alias(RouteGeneratorFactoryInterface::class, 'pagerfanta.route_generator_factory')
-        ->public();
+    $services->alias(PositionRouteGeneratorFactoryInterface::class, 'pagerfanta.route_generator_factory');
 
     $containerBuilder->addCompilerPass(new RegisterPagerfantaViewsPass());
 };
